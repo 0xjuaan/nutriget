@@ -55,7 +55,6 @@ export default function Home() {
           <Link
             href="/today"
             className={styles.card}
-            target="_blank"
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
