@@ -1,11 +1,71 @@
 import Head from 'next/head'
 import Image from 'next/image'
+import React, { useState, useEffect } from 'react';
+
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
+import CircularProgress from 'next/components/circular'
+
+
 
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Today() {
+  
+
+    //Setting the state of calories, so now setCalories updates the calories variable
+    //Currently the state is being set at 0, but when I use database, it will be set to the value in the database
+    const [calories, setCalories] = useState(0)
+    const max = 2100
+
+    //Defining a function to convert calories to percentage of max
+    const toPercent = (value) => Math.round(value*100/max)
+    
+    useEffect(() => {
+        //Updating the angle of the progress circle, using updated calorie values
+        const angle = 3.6 * toPercent(calories);
+        console.log(calories);
+        
+        //Updating the progress circle
+        let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
+
+        const element = document.getElementById("circle");
+
+        element.style.background = new_background;
+
+        //Addon if they exceeded the calories (fatty)
+        if (angle > 360) {
+          element.style.background = "conic-gradient(#ff4444 360deg, #888888 0deg)";
+        }
+    });
+
+    function handleAdd() {
+        //Getting user input
+        const input = document.getElementById("input");
+        const inputValue = parseInt(input.value);
+
+        if (inputValue < 1 || isNaN(inputValue)){
+          alert("Please enter a valid number");
+          return;
+        }
+
+        //Updating the state of calories
+        setCalories(calories + inputValue);
+    }
+
+    function fatty(){
+      if (calories > max){
+        return (
+          <div className="comment">You've eaten more than enough fatty</div>
+        );
+      }
+      else{
+        return(
+          <div className="comment">You've got {max-calories} calories ({100-toPercent(calories)}%) left to go</div>
+        )
+      }
+    }
+
   return (
     <>
       <Head>
@@ -14,13 +74,20 @@ export default function Today() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-         <div className={styles.description}>
-            <p>
-            Today's Calories...
-            </p>
-         </div>
-      </main>
+        <div className={styles.center}>
+          <h1 className={inter.className}>
+            Today's Calories
+          </h1>
+        </div>
+         
+        <div className={styles.center}>
+          <CircularProgress percentage={toPercent(calories)} />
+          <h4>Add a Meal:</h4>
+          <input id="input" placeholder="Calories" type="text" />
+          <button onClick={handleAdd}>Add</button>
+        </div>
+         <button></button>
+      
     </>
   )
 }

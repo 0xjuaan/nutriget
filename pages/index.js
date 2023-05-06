@@ -4,9 +4,16 @@ import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 
+import { useRouter } from 'next/router';
+
+
 const inter = Inter({ subsets: ['latin'] })
 
+//This is the homepage for users once they log in to Nutriget
 export default function Home() {
+  const router = useRouter();
+  const query = router.query; //This will be 'true' if the user just logged in
+  
   return (
     <>
       <Head>
@@ -16,42 +23,16 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}>
-          <p>
-            Get started by editing&nbsp;
-            <code className={styles.code}>pages/index.js</code>
-          </p>
-          <div>
-            <a
-              href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              By{' '}
-              <Image
-                src="/vercel.svg"
-                alt="Vercel Logo"
-                className={styles.vercelLogo}
-                width={100}
-                height={24}
-                priority
-              />
-            </a>
-          </div>
-        </div>
 
         <div className={styles.center}>
-          <Image
-            className={styles.logo}
-            src="/next.svg"
-            alt="Next.js Logo"
-            width={180}
-            height={37}
-            priority
-          />
+          <h1>
+            Nutriget
+          </h1>
         </div>
+        {query.login ? (
+        <p>Welcome back, user!</p>) : (<h1>Shush</h1>)}
 
-        <div className={styles.grid}>
+        <div className={styles.grid}> {/*This is a grid rather than flexbox. Think like cubby-hole*/}
           <Link
             href="/today"
             className={styles.card}
@@ -65,50 +46,22 @@ export default function Home() {
               🍔🍟🥞
             </p>
           </Link>
-
-          <a
-            href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
+          <Link
+            href="/today"
             className={styles.card}
-            target="_blank"
             rel="noopener noreferrer"
           >
             <h2 className={inter.className}>
-              Learn <span>-&gt;</span>
+               <span>Meal History-&gt;</span>
             </h2>
             <p className={inter.className}>
-              Learn about Next.js in an interactive course with&nbsp;quizzes!
+              
+              View your past meals
             </p>
-          </a>
+          </Link>
+          
 
-          <a
-            href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Templates <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Discover and deploy boilerplate example Next.js&nbsp;projects.
-            </p>
-          </a>
-
-          <a
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Deploy <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Instantly deploy your Next.js site to a shareable URL
-              with&nbsp;Vercel.
-            </p>
-          </a>
-        </div>
+         </div>
       </main>
     </>
   )
