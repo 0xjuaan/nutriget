@@ -8,22 +8,28 @@ import login from 'next/styles/Login.module.css'
 import {useState} from 'react';
 import { useRouter } from 'next/router'
 
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 //This is the login page for unauthenticated users
 export default function Login() {
   const router = useRouter();
-  const [formData, setFormdata] = useState({email: '', password:''})
+  const [formData, setFormdata] = useState({username: '',email: '', password:''})
 
   //This this changes the formData state when the user changes any of the input fields
   const handleChange = (event) => {
     setFormdata({ ...formData, [event.target.name]: event.target.value }); 
   }
 
+  async function isGood (formData) {
+    //Check if all the formData are OK. Only then should the func return True. Otherwise return False. 
+  }
+
   //This is the function that is called when the user submits the form
   const handleSubmit = async (event) => {
     event.preventDefault(); //Prevent the page from reloading
-    const result = await fetch ('/api/login', {
+    const result = await fetch ('/api/register', {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json'}
@@ -68,7 +74,7 @@ export default function Login() {
             placeholder="Password"
             onChange={handleChange}
             />
-            <button type="submit" className={login.submit}>
+            <button type="submit" className={login.submit}> disabled={isGood}
                 Log in
             </button>
 
