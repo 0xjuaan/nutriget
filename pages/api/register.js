@@ -31,9 +31,10 @@ export default function handler(req, res) {
       const {password} = formData;
 
       //Check the password validity here
-      //-----Password Checking-----
+      //-----Password Checking-----//
 
 
+      //Function to salt and hash the password, and return the salt+hash
       async function hashPassword(plainPassword) {
         const salt = await bcrypt.genSalt(saltRounds);
         const hash = await bcrypt.hash(plainPassword, salt);
@@ -41,7 +42,7 @@ export default function handler(req, res) {
       }
 
       hashPassword(password)
-        .then(( {salt, hash}) => { //Do what u want with the salt and password (database work)
+        .then(( {salt, hash}) => { //database insertion into 'users' table
             
 
         })
