@@ -31,7 +31,7 @@ export default function handler(req, res) {
       const {username} = formData;
       const {email} = formData;
       const {password} = formData;
-
+      
 
       //Function to salt and hash the password, and return the salt+hash
       async function hashPassword(plainPassword) {

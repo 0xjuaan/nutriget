@@ -15,7 +15,7 @@ const inter = Inter({ subsets: ['latin'] })
 //This is the login page for unauthenticated users
 export default function Register() {
   const router = useRouter();
-  const [formData, setFormdata] = useState({username: '',email: '', password:''})
+  const [formData, setFormdata] = useState({username: '',email: '', password:'', from: 'register'})
   const [response_message, setResponse] = useState('')
 
   const [Hovering, setHovering] = useState(false);
@@ -69,8 +69,9 @@ export default function Register() {
     const data = await result.json();
 
     if (data.response.includes("registered")) {
+      //TODO: Change the below to a redirect to the onboarding page
       router.push({
-        pathname: '/',
+        pathname: '/verifyEmail',
         query: {login: true},
       })
     }
