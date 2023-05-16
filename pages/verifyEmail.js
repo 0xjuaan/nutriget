@@ -25,7 +25,7 @@ export default function Verify(email) {
          
           <div className={styles.title}>
             <h1>
-              One more step, verify your email
+              One last step, verify your email
             </h1>
           </div>
         </main>
