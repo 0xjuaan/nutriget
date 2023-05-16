@@ -20,6 +20,13 @@
   .input::placeholder {
     color: #ccc;
   }
+
+  .buttonContainer {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
   
   .submit {
     margin-top: 10px;
@@ -40,4 +47,13 @@
     margin-top: 10px;
     color: #f44336;
     font-size: 14px;
+    align-items: center;
+  }
+
+  .error.visible {
+    display: block;
+  }
+
+  .error.hidden {
+    display: none;
   }

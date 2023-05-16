@@ -37,27 +37,21 @@ export default function handler(req, res) {
 
         //Collecting data from payload
         const formData = req.body; //Collecting the 'payload'
-        const {username} = formData;
-
-        console.log(`AAAAA${username}AAAAA`)
-
+        const {username} = formData; //Destructuring to get the form's values
         const {email} = formData;
-
         const {password} = formData;
+
         //Checking if email is of correct format
         if (username == '' && email == '' && password == '') {
             res.status(200).json({ 'response': 'Empty' });
         }
         if (valueFound(username, "username")) {
-            console.log(1)
             res.status(400).json({ 'response': 'Username already exists' });
         }
         else if (!validateEmail(email) || email.length > 50 || email.length < 5) {
-            console.log(2)
             res.status(400).json({ 'response': 'Invalid email address' });
         }
         else if (valueFound(email, "email")) {
-            console.log(3)
             res.status(400).json({ 'response': 'Email already exists' });
         }
         else if (username.length < 3 || username.length > 20) {
@@ -67,7 +61,6 @@ export default function handler(req, res) {
             res.status(400).json({'response': 'Password must be between 5 and 20 characters'});
         }
         else{
-            console.log(4)
             res.status(200).json({ 'response': "validForm" });
         }
 

@@ -18,6 +18,15 @@ export default function Register() {
   const [formData, setFormdata] = useState({username: '',email: '', password:''})
   const [response_message, setResponse] = useState('')
 
+  const [Hovering, setHovering] = useState(false);
+
+  const handleMouseEnter = () => setHovering(true);
+  const handleMouseLeave = () => setHovering(false);
+
+  
+
+
+
   async function isGood (formData) {
     //Check if all the formData are OK. Only then should the func return True. Otherwise return False. 
 
@@ -28,12 +37,10 @@ export default function Register() {
     }); 
     const data = await result.json();
     if (result.status == 400) {
-      console.log(data.response)
       setResponse(data.response);
       return false;
   }
   else {
-    console.log(data.response)
     setResponse('');
     return true;
   }
@@ -61,7 +68,7 @@ export default function Register() {
     });
     const data = await result.json();
 
-    if (data.response == "granted") {
+    if (data.response.includes("registered")) {
       router.push({
         pathname: '/',
         query: {login: true},
@@ -84,35 +91,45 @@ export default function Register() {
        
         <div className={styles.title}>
           <h1>
-            Welcome Back
+            Join Nutriget
           </h1>
         </div>
 
        
-
         <form onSubmit={handleSubmit} className={login.form}>
-            <input className={login.input}
+
+            <input className={login.input} //Username input
             name="username"
             placeholder="Username"
             onChange={handleChange}
             />
-            <input className={login.input}
+
+            <input className={login.input} //Email input
             name="email"
             placeholder="Email"
             onChange={handleChange}
             />
-            <input className={login.input}
+
+            <input className={login.input} //Password input
             name="password"
             placeholder="Password"
             onChange={handleChange}
             />
-            <button type="submit" className={login.submit}>
-                Register
-            </button>
-            <span className={login.error}>  {response_message} </span>
-         
+
+            <div className={login.buttonContainer}> 
+              <button onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} 
+              type="submit" className={login.submit}>
+                  Register
+              </button>
+              <span className={`${login.error} ${Hovering ? login.error.visible : login.error.hidden}`}>
+                {response_message}
+              </span>
+              
+            </div>
 
         </form>
+        
+        
       </main>
     </>
   )
