@@ -31,15 +31,28 @@ export default function Home() {
             Nutriget
           </h1>
         </div>
-        {query.login ? (
-        <p>Welcome back, user!</p>) : (<h1>Shush</h1>)}
+        {query.login ? (<p>Welcome back, user!</p>) : (<h1></h1>)}
+
+        <Link
+          href={`/new`}
+          className={styles.bigButton}
+          rel="noopener noreferrer">
+          <div>
+            <h1 className={inter.className}>
+                New
+            </h1>
+
+            <p className={inter.className}>
+                Add a new meal
+            </p>
+          </div>    
+          
+          <Image width={175} height={175} src='/add_sign.png'></Image>
+        </Link>
 
         <div className={styles.grid}>
           {/*This is a grid rather than flexbox. Think like cubby-hole*/}
-          <MainButton
-            page="new"
-            title="New"
-            description="Add a new meal"/>
+        
             
           <MainButton 
             page="today" 

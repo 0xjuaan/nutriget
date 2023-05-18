@@ -24,3 +24,5 @@ export default function MainButton({page, title, description}) {
     </Link>
     )
 }
+
+//export default function BigButton({page, title, description, image})

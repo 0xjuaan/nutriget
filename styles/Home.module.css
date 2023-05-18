@@ -33,6 +33,27 @@
   max-width: 100%;
 }
 
+.bigButton {
+  width: 525px;
+  display: flex;
+  padding: 1rem 1.2rem;
+  border-radius: var(--border-radius);
+  background: rgba(12, 230, 16, 0.348);
+  border: 1px solid rgba(var(--card-border-rgb), 0);
+  transition: background 200ms, border 200ms;
+}
+
+.bigButton h1 {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+.bigButton p {
+  margin-right: 120px;
+  opacity: 0.6;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
 .card {
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);
@@ -61,6 +82,9 @@
 .card:hover span {
   transform: translateX(5px);
 }
+.bigButton:hover span {
+  transform: translateX(5px);
+}
 
 .center {
   display: flex;
@@ -84,6 +108,10 @@
 @media (hover: hover) and (pointer: fine) {
   .card:hover {
     background: rgba(var(--card-rgb), 0.1);
+    border: 2px solid rgba(var(--card-border-rgb), 0.15);
+  }
+  .bigButton:hover {
+    background: rgba(12, 230, 16, 0.5);
     border: 2px solid rgba(var(--card-border-rgb), 0.15);
   }
 
