@@ -6,6 +6,8 @@ import styles from 'next/styles/Home.module.css'
 
 import { useRouter } from 'next/router';
 
+import MainButton from '../components/mainButton';
+
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -32,33 +34,24 @@ export default function Home() {
         {query.login ? (
         <p>Welcome back, user!</p>) : (<h1>Shush</h1>)}
 
-        <div className={styles.grid}> {/*This is a grid rather than flexbox. Think like cubby-hole*/}
-          <Link
-            href="/today"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-              Today's Calories <span>-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              Check if you're a fatty.
-              🍔🍟🥞
-            </p>
-          </Link>
-          <Link
-            href="/today"
-            className={styles.card}
-            rel="noopener noreferrer"
-          >
-            <h2 className={inter.className}>
-               <span>Meal History-&gt;</span>
-            </h2>
-            <p className={inter.className}>
-              
-              View your past meals
-            </p>
-          </Link>
+        <div className={styles.grid}>
+          {/*This is a grid rather than flexbox. Think like cubby-hole*/}
+          <MainButton
+            page="new"
+            title="New"
+            description="Add a new meal"/>
+            
+          <MainButton 
+            page="today" 
+            title="Today's Calories" 
+            description="Check if you're a fatty. 🍔🍟🥞"/>
+          
+          <MainButton
+            page="history"
+            title="Meal History"
+            description="View your past meals"/>
+          
+          
           
 
          </div>

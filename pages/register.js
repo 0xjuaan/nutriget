@@ -54,8 +54,6 @@ export default function Register() {
   useEffect(() => {
     isGood(formData);
   }, [formData]);
- 
-
 
 
   //This is the function that is called when the user submits the form
@@ -70,9 +68,10 @@ export default function Register() {
 
     if (data.response.includes("registered")) {
       //TODO: Change the below to a redirect to the onboarding page
+      useSession(FormData.email);
+
       router.push({
         pathname: '/verifyEmail',
-        query: {login: true},
       })
     }
     else {
