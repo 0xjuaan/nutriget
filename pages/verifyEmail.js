@@ -15,17 +15,17 @@ export default function Verify() {
     const router = useRouter();
     const [email, setEmail] = useState('');
 
-    useEffect(() => {
-      //Retrieve the email from local storage
-      const { email } = useSession();
-      if (email) {
-        setEmail(email);
+    useEffect (() => {
+      try {
+        setEmail(router.query.email);
       }
-      else {
-        console.log("You didnt store noting fam")
-        router.push('/register');
+      catch (err) {
+        console.log(err);
+        router.push('/register')
       }
-    }, []);
+    })
+    
+
     return (
         <>
         <Head>
@@ -41,6 +41,7 @@ export default function Verify() {
               One last step, verify your email
             </h1>
           </div>
+          <p className={styles.description}>We sent an email to {email}</p>
         </main>
       </> 
     )

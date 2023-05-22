@@ -25,8 +25,6 @@ export default function Register() {
 
   
 
-
-
   async function isGood (formData) {
     //Check if all the formData are OK. Only then should the func return True. Otherwise return False. 
 
@@ -58,20 +56,21 @@ export default function Register() {
 
   //This is the function that is called when the user submits the form
   const handleSubmit = async (event) => {
+
     event.preventDefault(); //Prevent the page from reloading
     const result = await fetch ('/api/register', {
       method: 'POST',
       body: JSON.stringify(formData),
       headers: { 'Content-Type': 'application/json'}
     });
+    
     const data = await result.json();
 
     if (data.response.includes("registered")) {
       //TODO: Change the below to a redirect to the onboarding page
-      useSession(FormData.email);
-
       router.push({
         pathname: '/verifyEmail',
+        query: { email: formData.email },
       })
     }
     else {
