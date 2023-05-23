@@ -63,10 +63,7 @@ export default function Home() {
             page="history"
             title="Meal History"
             description="View your past meals"/>
-          
-          
-          
-
+      
          </div>
       </main>
     </>
