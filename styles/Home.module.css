@@ -54,6 +54,12 @@
   line-height: 1.5;
   max-width: 30ch;
 }
+.bigButton div {
+  text-align: start;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
 .card {
   padding: 1rem 1.2rem;
   border-radius: var(--border-radius);
@@ -96,8 +102,6 @@
 .center h1 {
   font-size: 64px;
 }
-
-
 
 
 

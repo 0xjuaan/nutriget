@@ -1,12 +1,15 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
+
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 
 import { useRouter } from 'next/router';
+import {useState} from 'react';
 
 import MainButton from '../components/mainButton';
+import ReactModal from 'react-modal';
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -15,7 +18,32 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
   const router = useRouter();
   const query = router.query; //This will be 'true' if the user just logged in
-  
+  const [modalOpen, setModalOpen] = useState(false);
+
+    const openModal = () => {
+    setModalOpen(true);
+    };
+
+    const closeModal = () => {
+    setModalOpen(false);
+    };
+
+    const modalStyles = {
+      content: {
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        display: 'flex',
+        flexDirection: 'column',
+        width: '50%', // Adjust the width as needed
+        borderRadius: '30px',
+        maxHeight: '80vh', // Take up less space, adjust the height as needed
+        margin: 'auto',
+        background: 'rgba(0,0,0)', // Dark background color
+      },
+      overlay: {
+        background: 'rgba(0,0,0, 0.7)', // Dark background color
+      },
+    }
   return (
     <>
       <Head>
@@ -33,22 +61,20 @@ export default function Home() {
         </div>
         {query.login ? (<p>Welcome back, user!</p>) : (<h1></h1>)}
 
-        <Link
-          href={`/new`}
+        <button
+          onClick={openModal}
           className={styles.bigButton}
           rel="noopener noreferrer">
           <div>
             <h1 className={inter.className}>
                 New
             </h1>
-
             <p className={inter.className}>
                 Add a new meal
             </p>
           </div>    
-          
           <Image width={175} height={175} src='/add_sign.png'></Image>
-        </Link>
+        </button>
 
         <div className={styles.grid}>
           {/*This is a grid rather than flexbox. Think like cubby-hole*/}
@@ -65,6 +91,35 @@ export default function Home() {
             description="View your past meals"/>
       
          </div>
+          {/*HERE IS THE MODAL */}
+         <ReactModal 
+            isOpen={modalOpen} 
+            onRequestClose={closeModal}
+            onAfterOpen={console.log("Bigmanting")}
+            style={modalStyles}>
+            <Link
+            className={styles.bigButton}
+            href="/new"
+            >
+              <div>
+                <h1 className={inter.className}>
+                  Start From Scratch</h1>
+                <p className={inter.className}>
+                  Tell us what your meal is</p>
+              </div>
+            </Link>
+            <Link
+            className={styles.bigButton}
+            href="/history"
+            >
+              <div>
+                <h1 className={inter.className}>
+                  Add From History</h1>
+                <p className={inter.className}>
+                  Having the same meal again?</p>
+              </div>
+            </Link>
+          </ReactModal>
       </main>
     </>
   )
