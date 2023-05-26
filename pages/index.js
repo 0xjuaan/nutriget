@@ -77,8 +77,7 @@ export default function Home() {
         </button>
 
         <div className={styles.grid}>
-          {/*This is a grid rather than flexbox. Think like cubby-hole*/}
-        
+          {/*This is a grid rather than flexbox. Think like cubby-hole ting*/}
             
           <MainButton 
             page="today" 
@@ -99,7 +98,7 @@ export default function Home() {
             style={modalStyles}>
             <Link
             className={styles.bigButton}
-            href="/new"
+            href="/scratch"
             >
               <div>
                 <h1 className={inter.className}>
