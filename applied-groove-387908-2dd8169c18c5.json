@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "applied-groove-387908",
+  "private_key_id": "2dd8169c18c53fe748c17d94b63e95c5c5ebe2d5",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDEcZlvgQhxj74Q\nheaHQh/nH6PlMnWRBG1XGbK3WXysEgFgSXWMUruJtu7bw4+LfIljUtCSigTg3/As\nUiMPTJnKiV5fHzU8++0Mw9JCj+KaTri9pwE9N1e8TescN/+MzzB1i4PFnBpLxpZ4\nRLkOLhu/5J7KklWqDeVM2NXpc9uByPe97EEt9uOvNOMQI59LfCiSDtN6HtgoxlsB\n5irYQfXwMFxlCdwDRXp9PzWL+nQr5Kwlpp14fE1RmOEeoM15jIHpjaClFCEYb+pJ\nUVAfM62T01wlONBwhpBM4HBrRA0vMwbR1Als5eI/Uh62IVZ3ZqI5JH3qRKy6MtgV\n2VDJTaMzAgMBAAECggEAUwcejknPu0vBTfOCPW3d1Q6C86bxmOLxocw7RJJehs2v\nZjZ2J+J54FmAuEL+Izr2SJQikqUiLbeIp/rpVZiPMdMAn5ytoEJsbSZA8qAk6wpV\nu9bfx7Nh8jVOp2UlriqN9UiL39Q8KwXa6CdHve4QDXmAAed6rH7mCSZmtx6gSsha\nfuFUAhr9gDM4Ml5GEv46J3LyjFcUVjTEFvNGzoHJSj565qO9z7Zenkjq2qO9feiK\nLD/XSt7lLYnkaPLlydydRNXhb7o5BlpBhJPgE+72RTo2enqyZL908RcrkER7LEk5\nvXPDBZO812fSVMmRBjQJyt9Wa1h8SjWNqza/5C+FZQKBgQD/WbLPSpuzd9QuvtpZ\nAqaa+Q1f1Db2otxHJlAvsgxs311d0GqYC4VqTWtSre2lKGVU2nzo6sURI2tRh7su\nEbShTHQWyTJGlPNCmf12rYv9UoJVm/x2pQTy2yr1won9B5g6n7EZ5WQ9K38/a9aC\nClK5iuqU2ZRU3T/Mj3vEAzBXpwKBgQDE8Ylwv1EeP36ukEQzgb+gAGeb1G8FZxdY\n1EIWsUqya0FOYBDg3tFy9uC8aSRVQyDsa6mVGwZeoEeT5c/bACTQ8uknZdY1/G4r\nWA0guZlvdRmOuG7pGRSukboYF+A2/e7oxBdoDTtWNFqtYKZWRjlAXYOlNokwI5Qb\ndKdf1vRJlQKBgBt5/2+my5JINqDBEKW7T0olunaxUyi+5Y0SZlZ7hjLA5j8OCipK\nMxT5N68x3/yBmEXFLOOzP3lUoluni1Ctvw4MOAGrrKlDpdlo0IlQq1ua4UNtAYGS\nyDGJu9muEUMU6iCExn3O3TZn081zQSXFDpnAhPV3ZCqtlAvi9KJm5XDJAoGBAKXA\nNxFKI0ZW4BKg3pWO7K0HyitvdeTRJ+gd9GVO33QcKsGAvpPTU+ny95/6yZZswefY\nkMgqD4lSUguajf5eN54X4rzCy69x/XLDT4EsU4NnxZPFi6ro7ewiP8IJTi5aN1l1\nt9Fd2YOq2moy/qt7vLF8QtCofnuiZgNZgYh6y+ylAoGBAMkYfTKejlb6dSXcSNmw\nCubQ2/OcinzIql0sI8MTPSwjtM9dBjWBMWfKgHN4VK6STNbWzTvPNafOcwIlhwtl\nNNrxKsw0qcMsAx3MEQA64O5tlASo8idETKma35xSFGZofI/oKurc6VQstkDWGXKF\nuyuqQ9Mpe1p5pqOEHF4ExM6p\n-----END PRIVATE KEY-----\n",
+  "client_email": "nutriget@applied-groove-387908.iam.gserviceaccount.com",
+  "client_id": "100504850108701919677",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/nutriget%40applied-groove-387908.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

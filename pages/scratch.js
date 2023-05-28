@@ -11,7 +11,10 @@ import { useRouter } from 'next/router'
 import ReactModal from 'react-modal';
 import MainButton from 'next/components/mainButton'
 
+
+
 const inter = Inter({ subsets: ['latin'] })
+
 
 
 export default function New() {
@@ -22,29 +25,19 @@ export default function New() {
     const [food, setFood] = useState();
     const [calories, setCalories] = useState();
 
-    //Functions that open and close the modal component
-    const openModal = () => {
-    setModalOpen(true);
-    };
-    const closeModal = () => {
-    setModalOpen(false);
-    };
 
     //Accessing the edamam API with a POST request
     const handleSubmit = async (event) => {
 
       event.preventDefault(); //Prevent the page from reloading
-      const result = await fetch ('https://api.edamam.com/api/nutrition-details?app_id=f93901b3&app_key=250416ac1f75a3a9d6a2bdd2c501c0ef&beta=false&force=false', {
+      const result = await fetch ('/api/getNutrition  ', {
         method: 'POST',
         body: JSON.stringify(food),
         headers: { 'Content-Type': 'application/json'}
-      });
+      });      
       
       const data = await result.json();
       setCalories(data.calories);
-
-  
-      console.log(data);
     }
     
 
@@ -58,7 +51,7 @@ export default function New() {
       </Head>
       <main className={styles.main}>
         <form>
-          <input type="text" placeholder="Enter Food" onChange={(e) => setFood({'title': 'meal', 'ingr' : [e.target.value]})}></input>
+          <input type="text" placeholder="Enter Food" onChange={(e) => setFood(e.target.value)}></input>
           <button type ='submit' onClick={handleSubmit}>Submit Food</button>
         </form>
         <h1>

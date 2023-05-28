@@ -11,11 +11,11 @@ import {useState} from 'react';
 import MainButton from '../components/mainButton';
 import ReactModal from 'react-modal';
 
-
 const inter = Inter({ subsets: ['latin'] })
 
 //This is the homepage for users once they log in to Nutriget
 export default function Home() {
+
   const router = useRouter();
   const query = router.query; //This will be 'true' if the user just logged in
   const [modalOpen, setModalOpen] = useState(false);
