@@ -1,20 +1,26 @@
-//const { LanguageServiceClient } = require('@google-cloud/language');
-//const client = new LanguageServiceClient({ keyFilename: '/Programming/my_code/nutri-get/applied-groove-387908-2dd8169c18c5.json' });
+const { LanguageServiceClient } = require('@google-cloud/language');
+const client = new LanguageServiceClient({ keyFilename: '/Programming/my_code/nutri-get/applied-groove-387908-2dd8169c18c5.json' });
 
 
-/*async function extractEntities(text) {
-    const document = {
-      content: text,
-      type: 'PLAIN_TEXT',
-    };
+async function extractEntities(text) {
+  const document = {
+    content: text,
+    type: 'PLAIN_TEXT',
+  };
   
-    const [result] = await client.analyzeEntities({ document });
-    const entities = result.entities.map(entity => entity.name);
-    return entities;
-  }*/
+  // Detects entities in the document
+  const [result] = await client.analyzeEntities({document});
+  const entities = result.entities;
   
-  
-
+  console.log('Entities:');
+  entities.forEach(entity => {
+    console.log(entity.name);
+    console.log(` - Type: ${entity.type}, Salience: ${entity.salience}`);
+    if (entity.metadata && entity.metadata.wikipedia_url) {
+      console.log(` - Wikipedia URL: ${entity.metadata.wikipedia_url}`);
+    }
+  });
+}
   
 //Obligatory SQLite3 Database setup
 const sqlite3 = require('sqlite3').verbose();
@@ -30,19 +36,24 @@ export default function handler(req, res) {
       //Getting the user input from the form
       const text = req.body;
 
-      //Converting it into a list of items
-      //const entities = extractEntities(text);
 
-      const entities = [text]
-      //Sending the list of items to edamam
-      fetch ('https://api.edamam.com/api/nutrition-details?app_id=f93901b3&app_key=250416ac1f75a3a9d6a2bdd2c501c0ef&beta=false&force=false', {
+      //Sending the items to nutritionix
+      fetch ('https://trackapi.nutritionix.com/v2/natural/nutrients', {
         method: 'POST',
-        body: JSON.stringify({'title': 'food', 'ingr': entities}), //JSON.string
-        headers: { 'Content-Type': 'application/json'}
+        body: JSON.stringify({'query': text}), //JSON.string
+        headers: { 
+          'Content-Type': 'application/json',
+          'x-app-id' : '4def7606',
+          'x-app-key' : '36c464d782a41bc80e51f3fbfd32b9b3',
+          'x-remote-user-id' : 0 
+        }
       })
       .then(res => res.json())
       .then(data => {
-        console.log(`data: ${data}`)
-        res.status(200).json(data)})
+        var usefulData = []
+        for (let i = 0; i < data.foods.length; i++) {
+          usefulData.push({"name": data.foods[i].food_name, "calories": data.foods[i].nf_calories});
+        }
+        res.status(200).json({"data": usefulData})})
       }
       }

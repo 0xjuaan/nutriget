@@ -1,3 +1,20 @@
+NUTRITIONIX
+{foods: Array(2)}foods: Array(2)0: alt_measures: (4) [{…}, {…}, {…}, {…}]brand_name: nullbrick_code: nullclass_code: nullconsumed_at: "2023-05-28T11:11:39+00:00"food_name: "big mac"full_nutrients: (36) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]lat: nulllng: nullmeal_type: 1metadata: {is_raw_food: false}ndb_no: 21237nf_calories: 562.83nf_cholesterol: 78.84nf_dietary_fiber: 3.5nf_p: 267.18nf_potassium: 396.39nf_protein: 25.89nf_saturated_fat: 8.33nf_sodium: 1007.4nf_sugars: 8.69nf_total_carbohydrate: 43.98nf_total_fat: 32.76nix_brand_id: nullnix_brand_name: nullnix_item_id: nullnix_item_name: nullphoto: {thumb: 'https://nix-tag-images.s3.amazonaws.com/2583_thumb.jpg', highres: 'https://nix-tag-images.s3.amazonaws.com/2583_highres.jpg', is_user_uploaded: false}serving_qty: 1serving_unit: "sandwich"serving_weight_grams: 219source: 1sub_recipe: nulltag_id: nulltags: {item: "Mcdonald's big mac", measure: null, quantity: '1', food_group: 8, tag_id: 2583}upc: null[[Prototype]]: Object1: alt_measures: (11) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]brand_name: nullbrick_code: nullclass_code: nullconsumed_at: "2023-05-28T11:11:39+00:00"food_name: "coke"full_nutrients: (76) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]lat: nulllng: nullmeal_type: 1metadata: {is_raw_food: false}ndb_no: 14148nf_calories: 218nf_cholesterol: 0nf_dietary_fiber: 0nf_p: 46.71nf_potassium: 25.95nf_protein: 0nf_saturated_fat: 0nf_sodium: 15.57nf_sugars: 51.59nf_total_carbohydrate: 53.77nf_total_fat: 1.3nix_brand_id: nullnix_brand_name: nullnix_item_id: nullnix_item_name: nullphoto: {thumb: 'https://nix-tag-images.s3.amazonaws.com/484_thumb.jpg', highres: 'https://nix-tag-images.s3.amazonaws.com/484_highres.jpg', is_user_uploaded: false}serving_qty: 500serving_unit: "ml"serving_weight_grams: 519.04source: 1sub_recipe: nulltag_id: nulltags: {item: 'coca cola', measure: 'ml', quantity: '500.0', food_group: 9, tag_id: 484}upc: null[[Prototype]]: Objectlength: 2[[Prototype]]: Array(0)[[Prototype]]: Object
+
+
+
+
+
+
+
+
+
+
+
+
+
+EDAMAM
+
 //Request Body
 {
   "title": "string",
