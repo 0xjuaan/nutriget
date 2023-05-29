@@ -1,26 +1,5 @@
 const { LanguageServiceClient } = require('@google-cloud/language');
 const client = new LanguageServiceClient({ keyFilename: '/Programming/my_code/nutri-get/applied-groove-387908-2dd8169c18c5.json' });
-
-
-async function extractEntities(text) {
-  const document = {
-    content: text,
-    type: 'PLAIN_TEXT',
-  };
-  
-  // Detects entities in the document
-  const [result] = await client.analyzeEntities({document});
-  const entities = result.entities;
-  
-  console.log('Entities:');
-  entities.forEach(entity => {
-    console.log(entity.name);
-    console.log(` - Type: ${entity.type}, Salience: ${entity.salience}`);
-    if (entity.metadata && entity.metadata.wikipedia_url) {
-      console.log(` - Wikipedia URL: ${entity.metadata.wikipedia_url}`);
-    }
-  });
-}
   
 //Obligatory SQLite3 Database setup
 const sqlite3 = require('sqlite3').verbose();
@@ -36,7 +15,6 @@ export default function handler(req, res) {
       //Getting the user input from the form
       const text = req.body;
 
-
       //Sending the items to nutritionix
       fetch ('https://trackapi.nutritionix.com/v2/natural/nutrients', {
         method: 'POST',
@@ -50,6 +28,7 @@ export default function handler(req, res) {
       })
       .then(res => res.json())
       .then(data => {
+        //Sending the useful data from the API response to the frontend
         var usefulData = []
         for (let i = 0; i < data.foods.length; i++) {
           usefulData.push({"name": data.foods[i].food_name, "calories": data.foods[i].nf_calories});

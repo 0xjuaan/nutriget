@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
+//data is an object: {"data":[{"name":"big mac","calories":562.83}]}
 
 export default function Ingredients(data) {
     return (
@@ -13,7 +14,7 @@ export default function Ingredients(data) {
                         {value.name}
                     </h2>
                     <p className={inter.className}>
-                        {value.calories}
+                        {Math.round(value.calories)} Calories
                     </p>
                 </div>
             ))}

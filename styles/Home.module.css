@@ -4,7 +4,11 @@
   padding: 6rem;
   min-height: 100vh;
 }
-
+.list {
+  display: flex;
+  flex-direction: column;
+  width: var(--max-width);
+}
 .title {
   margin: 0;
   line-height: 1.15;

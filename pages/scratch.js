@@ -21,9 +21,32 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function New() {
 
-    //Request URL https://api.edamam.com/api/nutrition-details?app_id=f93901b3&app_key=250416ac1f75a3a9d6a2bdd2c501c0ef&beta=false&force=false
+    //Modal Setup
+    const [modalOpen, setModalOpen] = useState(false);
 
+    const closeModal = () => {
+    setModalOpen(false);
+    };
+
+    const modalStyles = {
+      content: {
+        alignItems: 'center',
+        justifyContent: 'space-evenly',
+        display: 'flex',
+        flexDirection: 'column',
+        width: '50%', // Adjust the width as needed
+        borderRadius: '30px',
+        maxHeight: '80vh', // Take up less space, adjust the height as needed
+        margin: 'auto',
+        background: 'rgba(0,0,0)', // Dark background color
+      },
+      overlay: {
+        background: 'rgba(0,0,0, 0.7)', // Dark background color
+      },
+    }
+    //Setting state for user input, and other data
     const [foodInput, setFood] = useState();
+    const [additional, setAdditional] = useState(false);
     const [calories, setCalories] = useState(0);
     const [data, setData] = useState([]);
 
@@ -32,14 +55,29 @@ export default function New() {
     const handleSubmit = async (event) => {
 
       event.preventDefault(); //Prevent the page from reloading
+      let finalInput = ""
+      if (!additional){
+        finalInput = foodInput;
+      }
+      else{
+        finalInput = foodInput + " " + additional;
+      }
+
+
+      
       const result = await fetch ('/api/getNutrition  ', {
         method: 'POST',
-        body: JSON.stringify(foodInput),
+        body: JSON.stringify(finalInput),
         headers: { 'Content-Type': 'application/json'}
-      });      
+      });     
       
       const response = await result.json();
       setData(response.data);
+
+      //Open the modal
+      if (response.data.length > 0 && !modalOpen) {
+        setModalOpen(true);
+      }
     }
     
 
@@ -56,11 +94,21 @@ export default function New() {
           <input type="text" placeholder="Enter Food" onChange={(e) => setFood(e.target.value)}></input>
           <button type ='submit' onClick={handleSubmit}>Submit Food</button>
         </form>
-        {data.length > 0 && <Ingredients data={data}/>}
-        <h1>
-          That is mental
-        </h1>
         
+        <ReactModal
+          isOpen={modalOpen} 
+          style={modalStyles}
+          >
+            <Ingredients data={data}/>
+            <button onClick={closeModal}>Close</button>
+            <div>
+              <h4>Missing something? Add it here</h4>
+              <form>
+                <input type="text" placeholder="Enter Food" onChange={(e) => setAdditional(e.target.value)}></input>
+                <button type ='submit' onClick={handleSubmit}>Submit Food</button>
+              </form>
+            </div>
+        </ReactModal>
         
       </main>
 
