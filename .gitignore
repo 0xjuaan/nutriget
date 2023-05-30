@@ -2,7 +2,7 @@
 
 #Secret databases- Remove the # later
 #/databases/*.db
-
+.applied-groove-387908-2dd8169c18c5.json
 # dependencies
 /node_modules
 /.pnp
