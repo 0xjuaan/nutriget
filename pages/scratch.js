@@ -50,21 +50,28 @@ export default function New() {
     const [calories, setCalories] = useState(0);
     const [data, setData] = useState([]);
 
+    //Function to remove stuff from food list
+    const handleRemove = (event) => {
+      const name = event.target.id;
+      const newData = data.filter((value) => value.name !== name);
+      setData(newData);
+    }
 
     //Accessing the edamam API with a POST request
     const handleSubmit = async (event) => {
 
       event.preventDefault(); //Prevent the page from reloading
       let finalInput = ""
+      if (event.target.id === 'og'){
+        setAdditional(false);
+      }
       if (!additional){
-        finalInput = foodInput;
+        finalInput = foodInput; //If this is the 1st time, just send the foodInput
       }
       else{
-        finalInput = foodInput + " " + additional;
+        finalInput = foodInput + " " + additional; //If user is adding additional, add it to the foodInput NL query
+        setFood(finalInput);
       }
-
-
-      
       const result = await fetch ('/api/getNutrition  ', {
         method: 'POST',
         body: JSON.stringify(finalInput),
@@ -92,14 +99,14 @@ export default function New() {
       <main className={styles.main}>
         <form>
           <input type="text" placeholder="Enter Food" onChange={(e) => setFood(e.target.value)}></input>
-          <button type ='submit' onClick={handleSubmit}>Submit Food</button>
+          <button id='og' type ='submit' onClick={handleSubmit}>Submit Food</button>
         </form>
         
         <ReactModal
           isOpen={modalOpen} 
           style={modalStyles}
           >
-            <Ingredients data={data}/>
+            <Ingredients data={data} function_on_click={handleRemove}/>
             <button onClick={closeModal}>Close</button>
             <div>
               <h4>Missing something? Add it here</h4>

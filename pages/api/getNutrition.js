@@ -34,5 +34,6 @@ export default function handler(req, res) {
           usefulData.push({"name": data.foods[i].food_name, "calories": data.foods[i].nf_calories});
         }
         res.status(200).json({"data": usefulData})})
+      .catch(err => console.log("ERRORMADTING" + err));
       }
       }

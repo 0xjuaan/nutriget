@@ -4,11 +4,55 @@
   padding: 6rem;
   min-height: 100vh;
 }
+.delete {
+  background: red;
+  border-radius: 10%;
+}
 .list {
   display: flex;
   flex-direction: column;
-  width: var(--max-width);
+  width: 50%;
 }
+
+.listCard {
+  justify-content: space-between;
+  width: 50%;
+  display:flex;
+  flex-direction:row;
+  padding: 1rem 1.2rem;
+  border-radius: var(--border-radius);
+  background: rgba(var(--card-rgb), 0);
+  border: 1px solid rgba(var(--card-border-rgb), 0);
+  transition: background 200ms, border 200ms;
+}
+
+.listCardRight {
+  display: grid;
+  place-items: center;
+}
+
+
+.listCard span {
+  display: inline-block;
+  transition: transform 200ms;
+}
+
+.listCard h2 {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+
+.listCard p {
+  margin: 0;
+  opacity: 0.6;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
+.listCard:hover span {
+  transform: translateX(5px);
+}
+
 .title {
   margin: 0;
   line-height: 1.15;
