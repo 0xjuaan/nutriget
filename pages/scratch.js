@@ -62,25 +62,31 @@ export default function New() {
 
       event.preventDefault(); //Prevent the page from reloading
       let finalInput = ""
+
       if (event.target.id === 'og'){
-        setAdditional(false);
+        finalInput = foodInput;
       }
-      if (!additional){
-        finalInput = foodInput; //If this is the 1st time, just send the foodInput
+      else {
+        finalInput = additional;
       }
-      else{
-        finalInput = foodInput + " " + additional; //If user is adding additional, add it to the foodInput NL query
-        setFood(finalInput);
-      }
+      
+      
+      
       const result = await fetch ('/api/getNutrition  ', {
         method: 'POST',
         body: JSON.stringify(finalInput),
         headers: { 'Content-Type': 'application/json'}
       });     
-      
-      const response = await result.json();
-      setData(response.data);
 
+      const response = await result.json();
+
+      if (!additional) {
+        setData(response.data)
+      }
+      else {
+        setData(data.concat(response.data));
+      }
+      
       //Open the modal
       if (response.data.length > 0 && !modalOpen) {
         setModalOpen(true);
