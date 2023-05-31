@@ -11,6 +11,7 @@
 .list {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   width: 50%;
 }
 
@@ -30,6 +31,7 @@
   display: grid;
   place-items: center;
 }
+
 
 
 .listCard span {
@@ -90,6 +92,38 @@
   border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
 }
+.smallButton {
+  justify-content: space-between;
+  align-items: center;
+  width: 250px;
+  display: flex;
+  padding: 1rem 1.2rem;
+  border-radius: var(--border-radius);
+  background: rgba(12, 230, 16, 0.348);
+  border: 1px solid rgba(var(--card-border-rgb), 0);
+  transition: background 200ms, border 200ms;
+}
+
+.smallButton h1 {
+  font-weight: 600;
+  margin-bottom: 0.7rem;
+}
+.smallButton p {
+  margin-right: 120px;
+  opacity: 0.6;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
+.smallButton div {
+  text-align: start;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  max-width: 30ch;
+}
+
+
+
 
 .bigButton h1 {
   font-weight: 600;
@@ -166,6 +200,10 @@
     background: rgba(12, 230, 16, 0.5);
     border: 2px solid rgba(var(--card-border-rgb), 0.15);
   }
+  .smallButton:hover {
+    background: rgba(12, 230, 16, 0.5);
+    border: 1.2px solid rgba(var(--card-border-rgb), 0.15);
+  }
 
  
 }
@@ -227,4 +265,9 @@
   to {
     transform: rotate(0deg);
   }
+}
+.collumnting{
+  display:flex;
+  flex-direction:column;
+  justify-content:space-evenly;
 }

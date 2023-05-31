@@ -12,12 +12,12 @@ import { useRouter } from 'next/router'
 
 const inter = Inter({ subsets: ['latin'] })
 
-//This is the login page for unauthenticated users
+//This is the Register page for unregistered users
 export default function Register() {
   const router = useRouter();
   const [formData, setFormdata] = useState({username: '',email: '', password:'', from: 'register'})
   const [response_message, setResponse] = useState('')
-
+  const[buttonDisabled, setButtonDisabled] = useState(true); //This is the state of the button. It is disabled by default. It is enabled when the user enters all the required fields
   const [Hovering, setHovering] = useState(false);
 
   const handleMouseEnter = () => setHovering(true);
@@ -36,10 +36,12 @@ export default function Register() {
     const data = await result.json();
     if (result.status == 400) {
       setResponse(data.response);
+
       return false;
   }
   else {
     setResponse('');
+    setButtonDisabled(false);
     return true;
   }
 }
@@ -49,6 +51,7 @@ export default function Register() {
   const handleChange = (event) => {
     setFormdata({ ...formData, [event.target.name]: event.target.value }); 
   };
+  //Check the form whenever the formData changes
   useEffect(() => {
     isGood(formData);
   }, [formData]);
@@ -68,10 +71,7 @@ export default function Register() {
 
     if (data.response.includes("registered")) {
       //TODO: Change the below to a redirect to the onboarding page
-      router.push({
-        pathname: '/verifyEmail',
-        query: { email: formData.email },
-      })
+      router.push('/login');
     }
     else {
       alert("Fix the details fam")
@@ -122,13 +122,9 @@ export default function Register() {
               </button>
               <span className={`${login.error} ${Hovering ? login.error.visible : login.error.hidden}`}>
                 {response_message}
-              </span>
-              
+              </span>              
             </div>
-
         </form>
-        
-        
       </main>
     </>
   )

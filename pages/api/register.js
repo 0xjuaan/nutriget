@@ -3,6 +3,7 @@ const bcrypt = require('bcrypt');
 const saltRounds = 10;
 //JSON Payload handler setup
 import bodyParser from 'body-parser';
+import db from 'next/database'
 
 export const config = {
   api: {
@@ -12,25 +13,15 @@ export const config = {
   },
 };
 
+
 //Handles the request sent to the api/login API Route (Are they valid?)
 export default function handler(req, res) {
     if (req.method == 'POST') {
 
-      //SQLite3 Database setup
-      const sqlite3 = require('sqlite3').verbose();
-      const db = new sqlite3.Database('./databases/accounts.db', (err) => {
-        if (err) {
-          console.error(err.message);
-        }
-        console.log('Connected to the accounts database.');
-      });
-
-
       //Collecting data from payload
       const formData = req.body; //Collecting the 'payload'
-      const {username} = formData;
-      const {email} = formData;
-      const {password} = formData;
+      const {username, email, password} = formData;
+
       
 
       //Function to salt and hash the password, and return the salt+hash
@@ -44,7 +35,7 @@ export default function handler(req, res) {
       .then(({salt, hash}) => {
         db.run( //Start DB Run
           'INSERT INTO users (username, email, hash, salt) VALUES (?, ?, ?, ?)',
-          [username, email, salt, hash],
+          [username, email, hash, salt],
           (err) => {
             if (err) {
               console.error(err.message);
@@ -58,4 +49,3 @@ export default function handler(req, res) {
 
     }
   };
-

@@ -1,6 +1,4 @@
 import Head from 'next/head'
-import Image from 'next/image'
-import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 import login from 'next/styles/Login.module.css'
@@ -14,6 +12,12 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Login() {
   const router = useRouter();
   const [formData, setFormdata] = useState({email: '', password:''})
+  const [error, setError] = useState("");
+
+  const [Hovering, setHovering] = useState(false);
+
+  const handleMouseEnter = () => setHovering(true);
+  const handleMouseLeave = () => setHovering(false);
 
   //This this changes the formData state when the user changes any of the input fields
   const handleChange = (event) => {
@@ -29,15 +33,11 @@ export default function Login() {
       headers: { 'Content-Type': 'application/json'}
     });
     const data = await result.json();
-
-    if (data.response == "granted") {
-      router.push({
-        pathname: '/',
-        query: {login: true},
-      })
+    if (data.user) {
+      router.push('/')
     }
     else {
-      alert("Incorrect email or password")
+      setError(data.response);
     }
   }
   
@@ -68,9 +68,12 @@ export default function Login() {
             placeholder="Password"
             onChange={handleChange}
             />
-            <button type="submit" className={login.submit}>
+            <button disabled={false} type="submit" className={login.submit}>
                 Log in
             </button>
+            <span className={`${login.error} ${Hovering ? login.error.visible : login.error.hidden}`}>
+                {error}
+              </span>
 
         </form>
       </main>

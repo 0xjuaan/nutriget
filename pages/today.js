@@ -81,7 +81,9 @@ export default function Today() {
         </div>
          
         <div className={styles.center}>
+
           <CircularProgress percentage={toPercent(calories)} />
+          
           <h4>Add a Meal:</h4>
           <input id="input" placeholder="Calories" type="text" />
           <button onClick={handleAdd}>Add</button>

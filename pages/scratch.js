@@ -10,7 +10,6 @@ import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router'
 import ReactModal from 'react-modal';
 import MainButton from 'next/components/mainButton'
-import ingredients from '../components/ingredients';
 import Ingredients from '../components/ingredients'
 
 
@@ -33,7 +32,6 @@ export default function New() {
         alignItems: 'center',
         justifyContent: 'space-evenly',
         display: 'flex',
-        flexDirection: 'column',
         width: '50%', // Adjust the width as needed
         borderRadius: '30px',
         maxHeight: '80vh', // Take up less space, adjust the height as needed
@@ -57,6 +55,14 @@ export default function New() {
       setData(newData);
     }
 
+    const handleAdd = () => {
+      setModalOpen(false);
+      //Have a new green modal pop up (Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link>)
+      console.log("bigmanting yeh")
+      //Set the current time
+      const date = new Date();
+      console.log(`date: ${date}`);
+    }
     //Accessing the edamam API with a POST request
     const handleSubmit = async (event) => {
 
@@ -113,6 +119,7 @@ export default function New() {
           style={modalStyles}
           >
             <Ingredients data={data} function_on_click={handleRemove}/>
+            
             <button onClick={closeModal}>Close</button>
             <div>
               <h4>Missing something? Add it here</h4>
@@ -120,6 +127,19 @@ export default function New() {
                 <input type="text" placeholder="Enter Food" onChange={(e) => setAdditional(e.target.value)}></input>
                 <button type ='submit' onClick={handleSubmit}>Submit Food</button>
               </form>
+              <button
+                onClick={handleAdd}
+                className={styles.smallButton}
+                rel="noopener noreferrer">
+                <div>
+                  <h1 className={inter.className}>
+                      Add
+                  </h1>
+                </div>
+                <div>
+                  <Image alt="add meal" width={90} height={90} src='/add_sign.png'></Image>
+                </div>    
+              </button>
             </div>
         </ReactModal>
         

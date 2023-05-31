@@ -6,19 +6,51 @@ import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 
 import { useRouter } from 'next/router';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 
 import MainButton from '../components/mainButton';
 import ReactModal from 'react-modal';
 
+import { getSession } from "/session";
+
+
 const inter = Inter({ subsets: ['latin'] })
 
 //This is the homepage for users once they log in to Nutriget
-export default function Home() {
+export default function Home({ session }) {
+  
+  if (!session) {
+    return <p>You are not logged in</p>;
+  }
+  const { user } = session;
+  
+
 
   const router = useRouter();
   const query = router.query; //This will be 'true' if the user just logged in
   const [modalOpen, setModalOpen] = useState(false);
+
+
+  if (!user) {
+    return (
+      <div>
+        <h1>Not logged in</h1>
+        <Link href="/api/login">Login</Link>
+      </div>
+    )
+  }
+  const logout = (e) => {
+    e.preventDefault();
+    fetch('/api/logout')
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.response.includes('out')) {
+          router.push(
+            {pathname: '/login',
+          query: {logout: true}});
+        }
+      });
+  }
 
     const openModal = () => {
     setModalOpen(true);
@@ -53,12 +85,15 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-
+        
         <div className={styles.center}>
           <h1>
             Nutriget
           </h1>
+          
         </div>
+        <button onClick={logout} className={styles.smallButton}><p>Log Out</p></button>
+
         {query.login ? (<p>Welcome back, user!</p>) : (<h1></h1>)}
 
         <button
@@ -123,3 +158,8 @@ export default function Home() {
     </>
   )
 }
+export async function getServerSideProps({ req, res }) {
+  const session = getSession(req);
+  return { props: { session } };
+}
+

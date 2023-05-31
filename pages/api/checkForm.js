@@ -1,13 +1,5 @@
 
-//Obligatory SQLite3 Database setup
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./databases/accounts.db', (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the accounts database.');
-});
-
+import db from 'next/database'
 //Checking if something has the pattern of an email or not
 function validateEmail(email) {
     var re = /\S+@\S+\.\S+/;
@@ -38,9 +30,7 @@ export default function handler(req, res) {
         //Collecting data from payload
         const formData = req.body; //Collecting the 'payload'
         
-        const {email} = formData; //Destructuring to get the form's values
-        const {password} = formData;
-        const {from} = formData; //Leaving it in because maybe it could be useful later
+        const {email, password} = formData; //Destructuring to get the form's values
 
             //The following checks if the registration form is valid (insta-checks)
             const {username} = formData; 
