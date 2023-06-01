@@ -43,6 +43,6 @@ export default function login(req, res) {
       }
     });
   
-  } else res.status(405).send({ message: 'Only POST requests allowed' });
+  } else res.status(405).json({ message: 'Only POST requests allowed' });
 
 }
