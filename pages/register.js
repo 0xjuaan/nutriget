@@ -69,7 +69,7 @@ export default function Register() {
     
     const data = await result.json();
 
-    if (data.response.includes("registered")) {
+    if (data.response) {
       //TODO: Change the below to a redirect to the onboarding page
       router.push('/login');
     }

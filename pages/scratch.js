@@ -12,14 +12,23 @@ import ReactModal from 'react-modal';
 import MainButton from 'next/components/mainButton'
 import Ingredients from '../components/ingredients'
 
+import { getSession } from "/session";
+
 
 
 const inter = Inter({ subsets: ['latin'] })
 
 
 
-export default function New() {
+export default function New({ session }) {
 
+  if (!session) {
+    return <p>You are not logged in</p>;
+  }
+  const { user } = session;
+  const [user_id, setUser_id] = useState(user.id);
+
+  console.log(user_id);
     //Modal Setup
     const [modalOpen, setModalOpen] = useState(false);
 
@@ -58,10 +67,13 @@ export default function New() {
     const handleAdd = () => {
       setModalOpen(false);
       //Have a new green modal pop up (Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link>)
-      console.log("bigmanting yeh")
-      //Set the current time
-      const date = new Date();
-      console.log(`date: ${date}`);
+
+      //Set the current date,time
+      const date = new Date().toISOString();
+      console.log(date);
+      console.log(data[0].name);
+      console.log(data[0].nutrition);
+      //
     }
     //Accessing the edamam API with a POST request
     const handleSubmit = async (event) => {
@@ -90,7 +102,7 @@ export default function New() {
         setData(response.data)
       }
       else {
-        setData(data.concat(response.data));
+        setData(data.concat(response.data)); //If additional, add the new array to the original array to get new_data
       }
       
       //Open the modal
@@ -149,4 +161,7 @@ export default function New() {
     
   );
 };
-
+export async function getServerSideProps({ req, res }) {
+  const session = getSession(req);
+  return { props: { session } };
+}

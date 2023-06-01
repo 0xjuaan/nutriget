@@ -3,10 +3,10 @@ import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 
 const inter = Inter({ subsets: ['latin'] })
-//data is an object: {"data":[{"name":"big mac","calories":562.83}]}
+//data is an object: {"data":[{"name":"big mac","nutrition":{calories, protein, cholestrerol, etc}}]}
 
 export default function Ingredients({data, function_on_click}) {
-    console.log(JSON.stringify(data))
+    //We pass in all the data
     return (
         <div className={styles.list}>
             {data.map((value) => (
@@ -16,7 +16,7 @@ export default function Ingredients({data, function_on_click}) {
                         {value.name}
                     </h2>
                     <p className={inter.className}>
-                        {Math.round(value.calories)} Calories
+                        {Math.round(value.nutrition.nf_calories)} Calories
                     </p>
                     </div>
                     <div className={styles.listCardRight}>
@@ -24,7 +24,7 @@ export default function Ingredients({data, function_on_click}) {
                     </div>
                 </div>
             ))}
-            <h4>Calories: {Math.round(data.reduce((total, value) => total + value.calories, 0))}</h4>
+            <h4>Calories: {Math.round(data.reduce((total, value) => total + value.nutrition.nf_calories, 0))}</h4> {/*Total Calories*/}
         </div>
         
 

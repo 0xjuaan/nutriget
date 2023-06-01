@@ -12,13 +12,14 @@ const db = new sqlite3.Database('./databases/accounts.db', (err) => {
 
 export default function handler(req, res) {
     if (req.method == 'POST') {
+
       //Getting the user input from the form
       const text = req.body;
 
-      //Sending the items to nutritionix
+      //Sending the user input to nutritionix
       fetch ('https://trackapi.nutritionix.com/v2/natural/nutrients', {
         method: 'POST',
-        body: JSON.stringify({'query': text}), //JSON.string
+        body: JSON.stringify({'query': text}), 
         headers: { 
           'Content-Type': 'application/json',
           'x-app-id' : '4def7606',
@@ -31,9 +32,9 @@ export default function handler(req, res) {
         //Sending the useful data from the API response to the frontend
         var usefulData = []
         for (let i = 0; i < data.foods.length; i++) {
-          usefulData.push({"name": data.foods[i].food_name, "calories": data.foods[i].nf_calories});
+          usefulData.push({"name": data.foods[i].food_name, "nutrition": data.foods[i]});
         }
         res.status(200).json({"data": usefulData})})
-      .catch(err => console.log("ERRORMADTING" + err));
+      .catch(err => console.log(err));
       }
       }
