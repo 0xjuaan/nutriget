@@ -1,14 +1,4 @@
-const { LanguageServiceClient } = require('@google-cloud/language');
-const client = new LanguageServiceClient({ keyFilename: '/Programming/my_code/nutri-get/applied-groove-387908-2dd8169c18c5.json' });
-  
-//Obligatory SQLite3 Database setup
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./databases/accounts.db', (err) => {
-  if (err) {
-    console.error(err.message);
-  }
-  console.log('Connected to the accounts database.');
-});
+import db from 'next/database'
 
 export default function handler(req, res) {
     if (req.method == 'POST') {

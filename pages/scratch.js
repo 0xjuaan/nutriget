@@ -1,4 +1,3 @@
-//SETUP THE DATABASE FOR NEW TASKS.
 import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -27,10 +26,14 @@ export default function New({ session }) {
   }
   const { user } = session;
   const [user_id, setUser_id] = useState(user.id);
+  const [name, setName] = useState("Unnamed Meal");
+  const router = useRouter();
+
 
   console.log(user_id);
     //Modal Setup
     const [modalOpen, setModalOpen] = useState(false);
+    const [endModal, setEndModal] = useState(false);
 
     const closeModal = () => {
     setModalOpen(false);
@@ -64,16 +67,38 @@ export default function New({ session }) {
       setData(newData);
     }
 
-    const handleAdd = () => {
-      setModalOpen(false);
-      //Have a new green modal pop up (Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link>)
-
+    const handleAdd = async (event) => {
+      event.preventDefault();
+      
       //Set the current date,time
       const date = new Date().toISOString();
       console.log(date);
-      console.log(data[0].name);
-      console.log(data[0].nutrition);
-      //
+      //Send data to the /api/newMeal endpoint
+
+      //Stuff to send: user_id, meal_name, date, data (array of objects)
+
+      const payload  = {
+        user_id: user_id,
+        meal_name: name,
+        date: date,
+        data: data
+      }
+
+      const result = await fetch('/api/newMeal', {
+        method: 'POST',
+        body: JSON.stringify(payload),
+        headers: { 'Content-Type': 'application/json'}
+      })
+      const response = await result.json()
+      if (response.response) {
+        console.log(response.response);
+        setModalOpen(false);
+        setEndModal(true);
+      }
+
+
+      
+      //Have a new green modal pop up (Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link>)
     }
     //Accessing the edamam API with a POST request
     const handleSubmit = async (event) => {
@@ -139,6 +164,8 @@ export default function New({ session }) {
                 <input type="text" placeholder="Enter Food" onChange={(e) => setAdditional(e.target.value)}></input>
                 <button type ='submit' onClick={handleSubmit}>Submit Food</button>
               </form>
+              <h4>Name your meal:</h4>
+              <input type="text" placeholder="Name" onChange={(e) => setName(e.target.value)}></input>
               <button
                 onClick={handleAdd}
                 className={styles.smallButton}
@@ -153,6 +180,14 @@ export default function New({ session }) {
                 </div>    
               </button>
             </div>
+        </ReactModal>
+
+
+        <ReactModal
+          isOpen={endModal} 
+          style={modalStyles}
+          >
+            <h1>Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link></h1>
         </ReactModal>
         
       </main>
