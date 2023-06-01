@@ -16,29 +16,18 @@ import { getSession } from "/session";
 
 const inter = Inter({ subsets: ['latin'] })
 
+export async function getServerSideProps({ req, res }) {
+  const { user } = getSession(req) ?? { user: null};
+  if (!user) return { redirect: { permanent: false, destination: "/login" } };
+  else return { props: { user } };
+}
+
 //This is the homepage for users once they log in to Nutriget
-export default function Home({ session }) {
-  
-  if (!session) {
-    return <p>You are not logged in</p>;
-  }
-  const { user } = session;
-  
-
-
+export default function Home({ user }) {
   const router = useRouter();
   const query = router.query; //This will be 'true' if the user just logged in
   const [modalOpen, setModalOpen] = useState(false);
-
-
-  if (!user) {
-    return (
-      <div>
-        <h1>Not logged in</h1>
-        <Link href="/api/login">Login</Link>
-      </div>
-    )
-  }
+  
   const logout = (e) => {
     e.preventDefault();
     fetch('/api/logout')
@@ -158,8 +147,3 @@ export default function Home({ session }) {
     </>
   )
 }
-export async function getServerSideProps({ req, res }) {
-  const session = getSession(req);
-  return { props: { session } };
-}
-
