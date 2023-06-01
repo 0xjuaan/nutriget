@@ -1,3 +1,6 @@
+//This shouldn't be public (fix later)
+
+
 import cookie from "cookie";
 import jwt from "jsonwebtoken";
 
