@@ -28,7 +28,13 @@ export default function History({ session }) {
   const [user_id, setUser_id] = useState(user.id);
 
   //Fetch this user's meals from the database
-
+  fetch ('/api/getMeals', {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({user_id: user_id})
+  })
+  .then(response => response.json())
+  .then(data => console.log(data));
 
   //Make and import a component that displays the meals in a list
   return (<h1>Nothing here yet {user_id}</h1>)
