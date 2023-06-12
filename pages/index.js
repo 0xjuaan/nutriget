@@ -81,7 +81,7 @@ export default function Home({ user }) {
           </h1>
           
         </div>
-        <button onClick={logout} className={styles.smallButton}><p>Log Out</p></button>
+        <button onClick={logout} className={styles.smallButton}><p>Log Out <br></br>(for testing user auth)</p></button>
 
         {query.login ? (<p>Welcome back, user!</p>) : (<h1></h1>)}
 

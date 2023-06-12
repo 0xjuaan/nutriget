@@ -6,6 +6,7 @@ import styles from 'next/styles/Home.module.css'
 import login from 'next/styles/Login.module.css'
 
 import {useState, useEffect} from 'react';
+import MealList from '../components/mealList'
 import { useRouter } from 'next/router'
 import ReactModal from 'react-modal';
 import MainButton from 'next/components/mainButton'
@@ -27,17 +28,26 @@ export default function History({ session }) {
   const { user } = session;
   const [user_id, setUser_id] = useState(user.id);
 
+  const [mealData, setMealData] = useState([]);
+
   //Fetch this user's meals from the database
+  useEffect(() => {
   fetch ('/api/getMeals', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({user_id: user_id})
   })
   .then(response => response.json())
-  .then(data => console.log(data));
+  .then(meal_data => setMealData(meal_data.rows));
+}, [mealData]);
 
   //Make and import a component that displays the meals in a list
-  return (<h1>Nothing here yet {user_id}</h1>)
+  //First prop: data.rows, which is an array of objects
+  //Also pass a function that deletes the meal from the database (based on meal_id)
+  console.log(mealData)
+  return (
+  <MealList data={mealData}/>
+  )
 }
 
 export async function getServerSideProps({ req, res }) {
