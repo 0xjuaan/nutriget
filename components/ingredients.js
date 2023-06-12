@@ -26,7 +26,5 @@ export default function Ingredients({data, function_on_click}) {
             ))}
             <h4>Calories: {Math.round(data.reduce((total, value) => total + value.nutrition.nf_calories, 0))}</h4> {/*Total Calories*/}
         </div>
-        
-
     )
 }
