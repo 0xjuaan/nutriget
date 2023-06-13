@@ -18,8 +18,8 @@ export async function getServerSideProps({ req, res }) {
 export default function Today( { user } ) {
   
     //Setting the state of calories, so now setCalories updates the calories variable
-    const [calories, setCalories] = useState(0);
-    const [todayMeals, setMealData] = useState([]);
+    const [calories, setCalories] = useState(200);
+
     //TODO: Getting this user's daily limit (first gotta do onboarding)
 
     //Getting this user's meals for today
@@ -31,35 +31,25 @@ export default function Today( { user } ) {
     })
     .then(response => response.json())
     .then(meal_data => {
-      if (meal_data.response == 'No meals') {
-        setMealData("No meals today")
-        console.log("SHUSH TING")
-      }
-      else {
-      setMealData(meal_data)
-      console.log(todayMeals)
-
-      //Calculating the total calories
-      let total = 0;
-      for (let i = 0; i < todayMeals.rows.length; i++) {
-        total += todayMeals.rows[i].calories;
-      }
-      setCalories(total);
-      console.log(`Total calories: ${calories}`)
-    
-      }
+        if (meal_data.response == 'No meals') {
+        }
+        else {
+            //Calculating the total calories
+            let calories = 0;
+            for (let i = 0; i < meal_data.rows.length; i++) {
+              setCalories(calories + meal_data.rows[i].calories); 
+            } 
+        } 
     });
   }
-  useEffect(() => {
-  getTodayMeals();
-  }, []);
 
     const max = 2100;
 
-    //Defining a function to convert calories to percentage of max
+    //Function to convert calories to percentage of max
     const toPercent = (value) => Math.round(value*100/max);
-    
+
     useEffect(() => {
+        getTodayMeals();
         //Updating the angle of the progress circle, using updated calorie values
         const angle = 3.6 * toPercent(calories);
         
@@ -73,7 +63,7 @@ export default function Today( { user } ) {
         if (angle > 360) {
           element.style.background = "conic-gradient(#ff4444 360deg, #888888 0deg)";
         }
-    });
+    }, []);
 
     function Fatty(){
       if (calories > max){

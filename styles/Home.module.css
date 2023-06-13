@@ -28,7 +28,9 @@
 }
 
 .listCardRight {
-  display: grid;
+  width: 40%;
+  display: flex;
+  justify-content: space-between;
   place-items: center;
 }
 
