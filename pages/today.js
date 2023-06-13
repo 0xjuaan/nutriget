@@ -5,55 +5,77 @@ import React, { useState, useEffect } from 'react';
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 import CircularProgress from 'next/components/circular'
-
-
+import { getSession } from "/session";
 
 const inter = Inter({ subsets: ['latin'] })
 
-export default function Today() {
-  
+export async function getServerSideProps({ req, res }) {
+  const { user } = getSession(req) ?? { user: null};
+  if (!user) return { redirect: { permanent: false, destination: "/login" } };
+  else return { props: { user } };
+}
 
+export default function Today( { user } ) {
+  
     //Setting the state of calories, so now setCalories updates the calories variable
-    //Currently the state is being set at 0, but when I use database, it will be set to the value in the database
-    const [calories, setCalories] = useState(0)
-    const max = 2100
+    const [calories, setCalories] = useState(0);
+    const [todayMeals, setMealData] = useState([]);
+    //TODO: Getting this user's daily limit (first gotta do onboarding)
+
+    //Getting this user's meals for today
+    const getTodayMeals = () => {
+      fetch ('/api/today', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({user_id: user.id})
+    })
+    .then(response => response.json())
+    .then(meal_data => {
+      if (meal_data.response == 'No meals') {
+        setMealData("No meals today")
+        console.log("SHUSH TING")
+      }
+      else {
+      setMealData(meal_data)
+      console.log(todayMeals)
+
+      //Calculating the total calories
+      let total = 0;
+      for (let i = 0; i < todayMeals.rows.length; i++) {
+        total += todayMeals.rows[i].calories;
+      }
+      setCalories(total);
+      console.log(`Total calories: ${calories}`)
+    
+      }
+    });
+  }
+  useEffect(() => {
+  getTodayMeals();
+  }, []);
+
+    const max = 2100;
 
     //Defining a function to convert calories to percentage of max
-    const toPercent = (value) => Math.round(value*100/max)
+    const toPercent = (value) => Math.round(value*100/max);
     
     useEffect(() => {
         //Updating the angle of the progress circle, using updated calorie values
         const angle = 3.6 * toPercent(calories);
-        console.log(calories);
         
         //Updating the progress circle
         let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
 
         const element = document.getElementById("circle");
-
         element.style.background = new_background;
 
-        //Addon if they exceeded the calories (fatty)
+        //Red if they exceeded the calories (fatty)
         if (angle > 360) {
           element.style.background = "conic-gradient(#ff4444 360deg, #888888 0deg)";
         }
     });
 
-    function handleAdd() {
-        //Getting user input
-        const input = document.getElementById("input");
-        const inputValue = parseInt(input.value);
-
-        if (inputValue < 1 || isNaN(inputValue)){
-          alert("Please enter a valid number");
-          return;
-        }
-
-        //Updating the state of calories
-        setCalories(calories + inputValue);
-    }
-
-    function fatty(){
+    function Fatty(){
       if (calories > max){
         return (
           <div className="comment">You've eaten more than enough fatty</div>
@@ -83,10 +105,7 @@ export default function Today() {
         <div className={styles.center}>
 
           <CircularProgress percentage={toPercent(calories)} />
-          
-          <h4>Add a Meal:</h4>
-          <input id="input" placeholder="Calories" type="text" />
-          <button onClick={handleAdd}>Add</button>
+          <Fatty></Fatty>
         </div>
          <button></button>
       

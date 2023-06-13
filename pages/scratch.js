@@ -72,11 +72,9 @@ export default function New({ session }) {
       
       //Set the current date,time
       const date = new Date().toISOString();
-      console.log(date);
+
       //Send data to the /api/newMeal endpoint
-
-      //Stuff to send: user_id, meal_name, date, data (array of objects)
-
+      //Stuff to send: user_id, meal_name, date, data-(array of objects)
       const payload  = {
         user_id: user_id,
         meal_name: name,

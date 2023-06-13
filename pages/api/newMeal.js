@@ -17,7 +17,7 @@ export default function handler(req, res) {
         };
 
         //Sum the nutrients across all foods
-        //TODO: Find a simpler way to do this
+        //TODO: Find a simpler way to do this using JS funcs
         for (let i = 0; i < data.length; i++) {
             meal_nutrition.calories += data[i].nutrition.nf_calories;
             meal_nutrition.total_fat += data[i].nutrition.nf_total_fat;
