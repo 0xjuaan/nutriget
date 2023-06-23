@@ -18,7 +18,7 @@ export async function getServerSideProps({ req, res }) {
 export default function Today( { user } ) {
   
     //Setting the state of calories, so now setCalories updates the calories variable
-    const [calories, setCalories] = useState(200);
+    const [calories, setCalories] = useState(0);
 
     //TODO: Getting this user's daily limit (first gotta do onboarding)
 
@@ -34,37 +34,43 @@ export default function Today( { user } ) {
         if (meal_data.response == 'No meals') {
         }
         else {
-            //Calculating the total calories
-            let calories = 0;
+            //Calculating the total calories, updating state
+            let counter_calories = 0;
             for (let i = 0; i < meal_data.rows.length; i++) {
-              setCalories(calories + meal_data.rows[i].calories); 
+              counter_calories += meal_data.rows[i].calories;
+              setCalories(counter_calories); 
+            }
+
+            //Updating the angle of the progress circle, using updated calorie values
+            const angle = 3.6 * toPercent(counter_calories);
+            console.log(angle)
+        
+            //Updating the progress circle
+            let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
+            console.log(new_background)
+
+            const element = document.getElementById("circle");
+            element.style.background = new_background;
+
+            //Red if they exceeded the calories 
+            if (angle > 360) {
+              element.style.background = "conic-gradient(#ff4444 360deg, #888888 0deg)";
+            }
+                
             } 
-        } 
     });
   }
-
+    //Later the user can update this using settings (it will be collected from sql)
     const max = 2100;
-
     //Function to convert calories to percentage of max
     const toPercent = (value) => Math.round(value*100/max);
 
     useEffect(() => {
-        getTodayMeals();
-        //Updating the angle of the progress circle, using updated calorie values
-        const angle = 3.6 * toPercent(calories);
-        
-        //Updating the progress circle
-        let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
-
-        const element = document.getElementById("circle");
-        element.style.background = new_background;
-
-        //Red if they exceeded the calories (fatty)
-        if (angle > 360) {
-          element.style.background = "conic-gradient(#ff4444 360deg, #888888 0deg)";
-        }
+        getTodayMeals(); 
+        console.log(calories)
     }, []);
 
+    
     function Fatty(){
       if (calories > max){
         return (
