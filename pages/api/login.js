@@ -19,7 +19,6 @@ export default function login(req, res) {
       }
       else {
           if (rows.length == 0) {
-            console.log("HI G")
             res.status(400).json({ 'response': 'Invalid email' });
               return false;
           }

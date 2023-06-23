@@ -19,9 +19,31 @@ export default function Today( { user } ) {
   
     //Setting the state of calories, so now setCalories updates the calories variable
     const [calories, setCalories] = useState(0);
+    const [calorieLimit, setCalorieLimit] = useState(1);
+
+    //Function to convert calories to percentage of max
+    const toPercent = (value) => Math.round(value*100/calorieLimit);
 
     //TODO: Getting this user's daily limit (first gotta do onboarding)
-
+    const getCalorieLimit = () => {
+      fetch ('/api/getCalories', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({user_id: user.id})
+    })
+    .then(response => response.json())
+    .then(calorie_data => {
+        if (calorie_data.response == 'No calorie limit set') {
+          //TODO: make this more streamlined for the user (like bringing the settings modal from index.js to here)
+          return <p>go to settings and set ur calorie limit</p>
+        }
+        else {
+          //Setting the state of calories, so now setCalories updates the calories variable
+          setCalorieLimit(calorie_data.calorieLimit);
+          return calorie_data.calorieLimit;
+        }
+    });
+  }
     //Getting this user's meals for today
     const getTodayMeals = () => {
       fetch ('/api/today', {
@@ -34,6 +56,7 @@ export default function Today( { user } ) {
         if (meal_data.response == 'No meals') {
         }
         else {
+            const limit = getCalorieLimit();
             //Calculating the total calories, updating state
             let counter_calories = 0;
             for (let i = 0; i < meal_data.rows.length; i++) {
@@ -42,44 +65,36 @@ export default function Today( { user } ) {
             }
 
             //Updating the angle of the progress circle, using updated calorie values
-            const angle = 3.6 * toPercent(counter_calories);
-            console.log(angle)
+            console.log("CALORIES " + counter_calories)
+            const angle = toPercent(counter_calories)*3.6;
+            console.log("HEHEHE" + angle)
         
             //Updating the progress circle
             let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
-            console.log(new_background)
 
             const element = document.getElementById("circle");
             element.style.background = new_background;
-
-            //Red if they exceeded the calories 
-            if (angle > 360) {
-              element.style.background = "conic-gradient(#ff4444 360deg, #888888 0deg)";
-            }
                 
             } 
     });
   }
-    //Later the user can update this using settings (it will be collected from sql)
-    const max = 2100;
-    //Function to convert calories to percentage of max
-    const toPercent = (value) => Math.round(value*100/max);
+   
+    
 
     useEffect(() => {
         getTodayMeals(); 
-        console.log(calories)
     }, []);
 
     
     function Fatty(){
-      if (calories > max){
+      if (calories > calorieLimit){
         return (
           <div className="comment">You've eaten more than enough fatty</div>
         );
       }
       else{
         return(
-          <div className="comment">You've got {max-calories} calories ({100-toPercent(calories)}%) left to go</div>
+          <div className="comment">You've got {Math.round(calorieLimit-calories)} calories ({100-toPercent(calories)}%) left to go</div>
         )
       }
     }

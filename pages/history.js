@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Image from 'next/image'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
-import styles from 'next/styles/Home.module.css'
 
 import {useState, useEffect} from 'react';
 import MealList from '../components/mealList'
@@ -63,7 +62,6 @@ const deleteMeal = (event) => {
   //Make and import a component that displays the meals in a list
   //First prop: data.rows, which is an array of objects
   //Also pass a function that deletes the meal from the database (based on meal_id)
-  console.log("WEWEWE" + JSON.stringify(mealData))
   return (
   <MealList data={mealData} function_on_click={deleteMeal}/>
   )

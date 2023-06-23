@@ -27,6 +27,8 @@ export default function Home({ user }) {
   const router = useRouter();
   const query = router.query; //This will be 'true' if the user just logged in
   const [modalOpen, setModalOpen] = useState(false);
+  const [settingsOpen, setSettingsOpen] = useState(false);
+  const [calorieLimit, setCalorieLimit] = useState();
   
   const logout = (e) => {
     e.preventDefault();
@@ -41,6 +43,26 @@ export default function Home({ user }) {
       });
   }
 
+  const setCalories = (e) => {
+    e.preventDefault();
+    const calorieLimit = document.getElementById('calorieLimit').value;
+    fetch('/api/setCalories', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({calorieLimit: calorieLimit}),
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        if (json.response.includes('calories')) {
+          const newting = json.calorieLimit;
+          setCalorieLimit(newting);
+        }
+      });
+  }
+
+
     const openModal = () => {
     setModalOpen(true);
     };
@@ -48,6 +70,14 @@ export default function Home({ user }) {
     const closeModal = () => {
     setModalOpen(false);
     };
+    const openSettings = () => {
+      setSettingsOpen(true);
+      
+      };
+  
+      const closeSettings = () => {
+      setSettingsOpen(false);
+      };
 
     const modalStyles = {
       content: {
@@ -76,10 +106,22 @@ export default function Home({ user }) {
       <main className={styles.main}>
         
         <div className={styles.center}>
+          <h1>Hi {user.id[0]}</h1>
           <h1>
             Nutriget
           </h1>
           
+          <button
+          onClick={openSettings}
+          className={styles.smallButton}
+          rel="noopener noreferrer">
+          <div>
+            <h5 className={inter.className}>
+                Settings
+            </h5>
+          </div>    
+        </button>
+
         </div>
         <button onClick={logout} className={styles.smallButton}><p>Log Out <br></br>(for testing user auth)</p></button>
 
@@ -118,7 +160,6 @@ export default function Home({ user }) {
          <ReactModal 
             isOpen={modalOpen} 
             onRequestClose={closeModal}
-            onAfterOpen={console.log("Bigmanting")}
             style={modalStyles}>
             <Link
             className={styles.bigButton}
@@ -142,6 +183,22 @@ export default function Home({ user }) {
                   Having the same meal again?</p>
               </div>
             </Link>
+          </ReactModal>
+
+          {/*Settings Modal */}
+          <ReactModal 
+            isOpen={settingsOpen} 
+            onRequestClose={closeSettings}
+            style={modalStyles}>
+            <h1>Settings Modal!!!</h1>
+
+            <div>
+              <h5>Update your daily calorie limit:</h5>
+              <input type="number" id="calorieLimit" name="calorieLimit" min="0" max="5000"></input>
+              <button onClick={setCalories}>Set</button>
+              <h6>Current calorieLimit: {calorieLimit}</h6>
+            </div>
+            
           </ReactModal>
       </main>
     </>
