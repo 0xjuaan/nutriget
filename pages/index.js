@@ -29,6 +29,29 @@ export default function Home({ user }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [calorieLimit, setCalorieLimit] = useState();
+
+  //Getting the user's calorie limit
+  useEffect(() => {
+    fetch('/api/getCalories', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(calorie_data => {
+        if (calorie_data.response == 'No calorie limit set') {
+          //TODO: make this more streamlined for the user (like bringing the settings modal from index.js to here)
+          return <Link href='/'>go to settings and set ur calorie limit</Link>
+        }
+        else {
+          //Setting the state of calories, so now setCalories updates the calories variable
+          setCalorieLimit(calorie_data.calorieLimit);
+          return calorie_data.calorieLimit;
+        }
+    });
+  }, []);
+
   
   const logout = (e) => {
     e.preventDefault();
