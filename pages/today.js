@@ -54,6 +54,7 @@ export default function Today( { user } ) {
         if (meal_data.response == 'No meals') {
         }
         else {
+            //TODO: Move this crap to the backend, along with summing the other nutrients (do all in backend)
             //Calculating the total calories, updating state
             let counter_calories = 0;
             for (let i = 0; i < meal_data.rows.length; i++) {

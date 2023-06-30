@@ -21,16 +21,19 @@ const inter = Inter({ subsets: ['latin'] })
 
 export default function New({ session }) {
 
-  if (!session) {
-    return <p>You are not logged in</p>;
-  }
+  
   const { user } = session;
   const [user_id, setUser_id] = useState(user.id);
   const [name, setName] = useState("Unnamed Meal");
   const router = useRouter();
 
+  //Setting state for user input, and other data
+  const [foodInput, setFood] = useState();
+  const [additional, setAdditional] = useState(false);
+  const [calories, setCalories] = useState(0);
+  const [data, setData] = useState([]);
 
-  console.log(user_id);
+
     //Modal Setup
     const [modalOpen, setModalOpen] = useState(false);
     const [endModal, setEndModal] = useState(false);
@@ -38,6 +41,9 @@ export default function New({ session }) {
     const closeModal = () => {
     setModalOpen(false);
     };
+    if (!session) {
+      return <p>You are not logged in</p>;
+    }
 
     const modalStyles = {
       content: {
@@ -54,16 +60,12 @@ export default function New({ session }) {
         background: 'rgba(0,0,0, 0.7)', // Dark background color
       },
     }
-    //Setting state for user input, and other data
-    const [foodInput, setFood] = useState();
-    const [additional, setAdditional] = useState(false);
-    const [calories, setCalories] = useState(0);
-    const [data, setData] = useState([]);
+    
 
     //Function to remove stuff from food list
     const handleRemove = (event) => {
-      const name = event.target.id;
-      const newData = data.filter((value) => value.name !== name);
+      const id = Number(event.target.id);
+      const newData = data.filter((value) => value.id !== id);
       setData(newData);
     }
 
@@ -89,7 +91,6 @@ export default function New({ session }) {
       })
       const response = await result.json()
       if (response.response) {
-        console.log(response.response);
         setModalOpen(false);
         setEndModal(true);
       }
@@ -134,7 +135,6 @@ export default function New({ session }) {
       }
     }
     
-
   return (
      <>
       <Head>
