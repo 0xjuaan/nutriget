@@ -5,10 +5,11 @@ export default function handler(req, res) {
       //Getting the user input from the form
       const {user_id} = req.body;
       const date = new Date().toISOString();
-
+      const start_of_day = (date.substring(0, 11) + '00:00:00.000Z');
+      console.log(start_of_day)
       
-      db.all('SELECT meal_id FROM user_meals WHERE salt = ? AND datetime(time_of_meal) >= datetime(?, "-1 day") AND datetime(time_of_meal) <= datetime(?)',
-      [user_id, date, date], (err, rows) => {
+      db.all('SELECT meal_id FROM user_meals WHERE salt = ? AND datetime(time_of_meal) >= datetime(?) AND datetime(time_of_meal) <= datetime(?)',
+      [user_id, start_of_day, date], (err, rows) => {
         if (err) {
             console.error(err.message);
             return false;

@@ -3,9 +3,8 @@ import db from 'next/database'
 import { getSession } from "/session";
 
 export default function handler(req, res) {
-    if (req.method == 'POST') {
+    if (req.method == 'GET') {
 
-        const {calorieLimit} = req.body;
         const {user} = getSession(req);
         const user_id = user.id;
 
@@ -21,7 +20,6 @@ export default function handler(req, res) {
                 else {
                     if (rows.length == 0) {
                         //If the user doesn't have a calorie limit set, insert one
-                        //insertCalorieLimit(user, calorieLimit, res);
                         res.status(500).json({ 'response': 'No calorie limit set' }); 
                     }
                     else {
