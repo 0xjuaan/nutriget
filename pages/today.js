@@ -23,30 +23,27 @@ export default function Today( { user } ) {
     const [calorieLimit, setCalorieLimit] = useState(1);
 
     //Function to convert calories to percentage of max
-    const toPercent = (value) => Math.round(value*100/calorieLimit);
+    const toPercent = (value, limit) => Math.round(value*100/limit);
 
-    //TODO: Getting this user's daily limit (first gotta do onboarding)
-    const getCalorieLimit = () => {
-      fetch ('/api/getCalories', {
+    //Getting this user's daily limit
+    const getCalorieLimit = async () => {
+      const response = await fetch ('/api/getCalories', {
       method: 'GET',
       headers: {'Content-Type': 'application/json'},
     })
 
-    .then(response => response.json())
-    .then(calorie_data => {
-        if (calorie_data.response == 'No calorie limit set') {
-          //TODO: make this more streamlined for the user (like bringing the settings modal from index.js to here)
-          return <Link href='/'>go to settings and set ur calorie limit</Link>
-        }
-        else {
-          //Setting the state of calories, so now setCalories updates the calories variable
-          setCalorieLimit(calorie_data.calorieLimit);
-          return calorie_data.calorieLimit;
-        }
-    });
+    const calorie_data = await response.json()
+    if (calorie_data.response == 'No calorie limit set') {
+      //TODO: make this more streamlined for the user (like bringing the settings modal from index.js to here)
+      return <Link href='/'>go to settings and set ur calorie limit</Link>
+    }
+    else {
+        return calorie_data.calorieLimit;
+    }
   }
+
     //Getting this user's meals for today
-    const getTodayMeals = () => {
+    const getTodayMeals = (limit) => {
       fetch ('/api/today', {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -57,7 +54,6 @@ export default function Today( { user } ) {
         if (meal_data.response == 'No meals') {
         }
         else {
-            const limit = getCalorieLimit();
             //Calculating the total calories, updating state
             let counter_calories = 0;
             for (let i = 0; i < meal_data.rows.length; i++) {
@@ -66,9 +62,8 @@ export default function Today( { user } ) {
             }
 
             //Updating the angle of the progress circle, using updated calorie values
-            console.log("CALORIES " + counter_calories)
-            const angle = toPercent(counter_calories)*3.6;
-            console.log("HEHEHE" + angle)
+            console.log(limit)
+            const angle = toPercent(counter_calories, limit)*3.6;
         
             //Updating the progress circle
             let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
@@ -80,7 +75,14 @@ export default function Today( { user } ) {
     });
   }
     useEffect(() => {
-        getTodayMeals(); 
+      const fetchCalories = async () => {
+        getCalorieLimit().then(
+          limit => {
+            setCalorieLimit(limit);
+            getTodayMeals(limit);
+          });
+      }
+      fetchCalories();
     }, []);
 
     
@@ -92,7 +94,7 @@ export default function Today( { user } ) {
       }
       else{
         return(
-          <div className="comment">You&apos;ve got {Math.round(calorieLimit-calories)} calories ({100-toPercent(calories)}%) left to go</div>
+          <div className="comment">You&apos;ve got {Math.round(calorieLimit-calories)} calories ({100-toPercent(calories, calorieLimit)}%) left to go</div>
         )
       }
     }
@@ -113,7 +115,7 @@ export default function Today( { user } ) {
          
         <div className={styles.center}>
 
-          <CircularProgress percentage={toPercent(calories)} />
+          <CircularProgress percentage={toPercent(calories, calorieLimit)} />
           <Fatty></Fatty>
         </div>
          <button></button>
