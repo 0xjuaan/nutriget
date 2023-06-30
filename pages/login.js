@@ -2,6 +2,7 @@ import Head from 'next/head'
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
 import login from 'next/styles/Login.module.css'
+import Link from 'next/link'
 
 import {useState} from 'react';
 import { useRouter } from 'next/router'
@@ -71,9 +72,13 @@ export default function Login() {
             <button disabled={false} type="submit" className={login.submit}>
                 Log in
             </button>
-            <span className={`${login.error} ${Hovering ? login.error.visible : login.error.hidden}`}>
+            <span className={login.error}>
                 {error}
               </span>
+              <span className={login.forgot}>
+                No Account? <Link href="/register">Sign Up</Link>
+              </span>
+
 
         </form>
       </main>
