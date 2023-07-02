@@ -68,10 +68,10 @@ export default function Register() {
     });
     
     const data = await result.json();
+    console.log(data)
 
-    if (data.response) {
-      //TODO: Change the below to a redirect to the onboarding page
-      router.push('/login');
+    if (data.user) {
+      router.push('/onboard');
     }
     else {
       alert("Fix the details fam")

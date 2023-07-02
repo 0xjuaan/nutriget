@@ -4,6 +4,8 @@ const saltRounds = 10;
 //JSON Payload handler setup
 import bodyParser from 'body-parser';
 import db from 'next/database'
+import { setSession } from "/session";
+
 
 export const config = {
   api: {
@@ -42,7 +44,11 @@ export default function handler(req, res) {
               res.status(500).json({ error: 'Internal server error' });
             } 
             else {
-              res.status(200).json({ 'response': `registered ${username}` });
+                const user = { email: email, id: salt, onboardNeeded: true }; //The user id is their salt (since it's unique and not sensitive)
+                const session = { user }; //Setting the session as the user object
+
+                setSession(res, session);
+                res.status(200).json({ user });
             }
         }); //End DB Run
       })
