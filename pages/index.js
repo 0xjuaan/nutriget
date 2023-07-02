@@ -102,22 +102,27 @@ export default function Home({ user }) {
       setSettingsOpen(false);
       };
 
-    const modalStyles = {
-      content: {
-        alignItems: 'center',
-        justifyContent: 'space-evenly',
-        display: 'flex',
-        flexDirection: 'column',
-        width: '50%', // Adjust the width as needed
-        borderRadius: '30px',
-        maxHeight: '80vh', // Take up less space, adjust the height as needed
-        margin: 'auto',
-        background: 'rgba(0,0,0)', // Dark background color
-      },
-      overlay: {
-        background: 'rgba(0,0,0, 0.7)', // Dark background color
-      },
-    }
+      const modalStyles = {
+        content: {
+          alignItems: 'center',
+          justifyContent: 'space-evenly',
+          display: 'flex',
+          flexDirection: 'column',
+          width: '50%', // Adjust the width as needed
+          borderRadius: '10px', // Rounded corners
+          maxHeight: '80vh', // Take up less space, adjust the height as needed
+          margin: 'auto',
+          background: 'rgba(0,0,0, 0.1)', // Glassmorphism background color
+          backdropFilter: 'blur(24px)', // Blur effect
+          WebkitBackdropFilter: 'blur(24px)', // Blur effect for Safari
+          border: '1px solid rgba(0, 0, 0, 0.6)', // Glassmorphism border
+        },
+        overlay: {
+          background: 'rgba(0,0,0, 0.7)', // Dark background color
+        },
+      }
+      
+      
   return (
     <>
       <Head>
@@ -162,7 +167,7 @@ export default function Home({ user }) {
                 Add a new meal
             </p>
           </div>    
-          <Image width={175} height={175} src='/add_sign.png'></Image>
+          <Image alt="add" width={175} height={175} src='/add_sign.png'></Image>
         </button>
 
         <div className={styles.grid}>

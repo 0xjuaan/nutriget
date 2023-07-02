@@ -19,8 +19,9 @@ export default function Register() {
   const [response_message, setResponse] = useState('')
   const[buttonDisabled, setButtonDisabled] = useState(true); //This is the state of the button. It is disabled by default. It is enabled when the user enters all the required fields
   const [Hovering, setHovering] = useState(false);
+  
 
-  const handleMouseEnter = () => setHovering(true);
+  const handleMouseEnter = () => setHovering(true); 
   const handleMouseLeave = () => setHovering(false);
 
   
@@ -36,6 +37,7 @@ export default function Register() {
     const data = await result.json();
     if (result.status == 400) {
       setResponse(data.response);
+      setButtonDisabled(true);
 
       return false;
   }
@@ -116,13 +118,13 @@ export default function Register() {
             />
 
             <div className={login.buttonContainer}> 
-              <button onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave} 
+              <button onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}  disabled={buttonDisabled}
               type="submit" className={login.submit}>
                   Register
               </button>
-              <span className={`${login.error} ${Hovering ? login.error.visible : login.error.hidden}`}>
+              <span className={`${login.error} ${login.error.visible}`}>
                 {response_message}
-              </span>              
+              </span>            
             </div>
         </form>
       </main>

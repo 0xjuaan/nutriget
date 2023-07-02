@@ -1,59 +1,52 @@
 .form {
-    display: flex;
-    flex-direction: column;
-    width: 300px;
-    margin: auto;
-  }
-  
-  .input {
-    margin: 10px 0;
-    padding: 10px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    font-size: 16px;
-    outline: none;
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: 0 auto; /* Make sure it centers both horizontally and vertically */
+}
 
-    
-    color: #efefef;
-    background-color: #121212;
-  }
-  .input::placeholder {
-    color: #ccc;
-  }
+.input {
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+  color: #efefef;
+  background-color: #121212;
+}
 
-  .buttonContainer {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    margin-top: 10px;
-  }
-  
-  .submit {
-    margin-top: 10px;
-    padding: 10px;
-    border: none;
-    border-radius: 5px;
-    background-color: #4caf50;
-    color: #fff;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  .submit:hover {
-    background-color: #3e8e41;
-  }
-  
-  .error {
-    margin-top: 10px;
-    color: #f44336;
-    font-size: 14px;
-    align-items: center;
-  }
+.input::placeholder {
+  color: #ccc;
+}
 
-  .error.visible {
-    display: block;
-  }
+.buttonContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  margin-top: 10px;
+}
 
-  .error.hidden {
-    display: none;
-  }
+.submit {
+  margin-top: 10px;
+  padding: 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: #4caf50;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease; /* Smooth transition effect */
+}
+
+.submit:hover {
+  background-color: #3e8e41;
+}
+
+.error {
+  margin-top: 10px;
+  color: #f44336;
+  font-size: 14px;
+  align-items: center;
+  visibility: visible;
+}
