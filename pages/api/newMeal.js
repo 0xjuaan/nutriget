@@ -14,24 +14,23 @@ export default function handler(req, res) {
             "total_fat": 0,
             "total_carbohydrate": 0,
             "sugars": 0,
+            "protein": 0,
         };
 
-        //Sum the nutrients across all foods
+        //Sum the nutrients across all foods in the meal
         //TODO: Find a simpler way to do this using JS funcs
         for (let i = 0; i < data.length; i++) {
             meal_nutrition.calories += data[i].nutrition.nf_calories;
             meal_nutrition.total_fat += data[i].nutrition.nf_total_fat;
             meal_nutrition.total_carbohydrate += data[i].nutrition.nf_total_carbohydrate;
             meal_nutrition.sugars += data[i].nutrition.nf_sugars;
+            meal_nutrition.protein += data[i].nutrition.nf_protein;
         }
-        console.log()
-
-
 
       //Send the meal_nutrition_data to the meal table
         db.run( 
-        'INSERT INTO meals (name, calories, total_fat, total_carbs, sugars) VALUES (?, ?, ?, ?, ?)',
-        [meal_name, meal_nutrition.calories, meal_nutrition.total_fat, meal_nutrition.total_carbohydrate, meal_nutrition.sugars],
+        'INSERT INTO meals (name, calories, total_fat, total_carbs, sugars, protein) VALUES (?, ?, ?, ?, ?, ?)',
+        [meal_name, meal_nutrition.calories, meal_nutrition.total_fat, meal_nutrition.total_carbohydrate, meal_nutrition.sugars, meal_nutrition.protein],
         function(err) {
         if (err) {
             console.error(err.message);

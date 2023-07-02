@@ -13,10 +13,11 @@ export default function Ingredients({data, function_on_click}) {
                 <div key={value.id} id={value.id} className={styles.listCard}>
                     <div>
                     <h2 className={inter.className}>
-                        {value.name+value.id}
+                        {value.name}
                     </h2>
                     <p className={inter.className}>
                         {Math.round(value.nutrition.nf_calories)} Calories
+                        {Math.round(value.nutrition.nf_total_fat)}g Fat
                     </p>
                     </div>
                     <div className={styles.listCardRight}>

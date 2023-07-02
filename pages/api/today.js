@@ -7,7 +7,8 @@ export default function handler(req, res) {
       const date = new Date().toISOString();
       const start_of_day = (date.substring(0, 11) + '00:00:00.000Z');
       console.log(start_of_day)
-      
+
+      //Getting today's meals
       db.all('SELECT meal_id FROM user_meals WHERE salt = ? AND datetime(time_of_meal) >= datetime(?) AND datetime(time_of_meal) <= datetime(?)',
       [user_id, start_of_day, date], (err, rows) => {
         if (err) {
@@ -26,7 +27,7 @@ export default function handler(req, res) {
                 meal_ids.push(rows[i].meal_id);
               }
 
-              //Getting all the meals of this user
+              //Getting all the meal data of today's meals
               db.all('SELECT * FROM meals WHERE meal_id IN (' + meal_ids.join(',') + ')', [], (err, rows) => {
                 if (err) {
                     console.error(err.message);
@@ -35,6 +36,16 @@ export default function handler(req, res) {
                 }
                 else {
                 //Now we have all the meals of this user in the last 24 hours
+                let counter_calories = 0;
+                for (let i = 0; i < meal_data.rows.length; i++) {
+                  counter_calories += rows[i].calories;
+                }
+                let counter_protein = 0;
+                for (let i = 0; i < meal_data.rows.length; i++) {
+                  counter_protein += rows[i].protein;
+                }
+                
+
                   res.status(200).json({ rows });
                 }
               });
