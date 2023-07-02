@@ -38,7 +38,7 @@ export default function MealList({data, function_on_click}) {
                     <div className={styles.listCardRight}>
                         <Image alt="add meal" width={65} height={65} src='/add_sign.png'></Image>
                         <button id={value.meal_id} onClick={(e) => {e.stopPropagation(); function_on_click;}} className={styles.delete}>Remove</button>
-                        <button onClick={()=> handleCardClick(value)}>More Data</button>
+                        <button onClick={()=> handleCardClick(value)}>{(selectedMeal === value.meal_id) ? `Less Data` : `More Data`}</button>
                     </div>
                     {selectedMeal === value.meal_id && 
                         <div className={styles.details}>
