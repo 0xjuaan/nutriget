@@ -14,15 +14,15 @@ const inter = Inter({ subsets: ['latin'] })
 
 //This is the homepage for users once they log in to Nutriget
 export default function History({ session }) {
-  if (!session) {
-    return <p>You are not logged in</p>;
-  }
+  
 
   const { user } = session;
   const [user_id, setUser_id] = useState(user.id);
 
   const [mealData, setMealData] = useState([]);
   const [change_val, setChange] = useState(0);
+
+  
 
   //Fetch all of this user's meals from the database
   useEffect(() => {
@@ -69,6 +69,10 @@ const deleteMeal = (event) => {
 
 export async function getServerSideProps({ req, res }) {
   const session = getSession(req);
+  
+  if (!session) {
+    return <p>You are not logged in</p>;
+  }
   return { props: { session } };
 }
 
