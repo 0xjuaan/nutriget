@@ -36,6 +36,9 @@ export default function login(req, res) {
                 setSession(res, session);
                 res.status(200).json({ user });
               }
+              else{
+                res.status(400).json({ 'response': 'Invalid Email Or Password' });
+              }
               return true;
             });
           }

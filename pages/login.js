@@ -72,9 +72,9 @@ export default function Login() {
             <button disabled={false} type="submit" className={login.submit}>
                 Log in
             </button>
-            <span className={login.error}>
+            <span className={`${login.error} ${login.error.visible}`}>
                 {error}
-              </span>
+            </span>
               <span className={login.forgot}>
                 No Account? <Link href="/register">Sign Up</Link>
               </span>
