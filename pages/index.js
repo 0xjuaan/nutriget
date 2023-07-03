@@ -68,21 +68,18 @@ export default function Home({ user }) {
 
   const setCalories = (e) => {
     e.preventDefault();
-    const calorieLimit = document.getElementById('calorieLimit').value;
+    const newCalories = document.getElementById('calorieLimit').value;
+    setCalorieLimit(newCalories);
+    const newProtein = document.getElementById('proteinGoal').value;
+    setProteinGoal(newProtein);
+
     fetch('/api/setCalories', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({calorieLimit: calorieLimit}),
+      body: JSON.stringify({calorieLimit: calorieLimit, proteinGoal: proteinGoal}),
     })
-      .then((res) => res.json())
-      .then((json) => {
-        if (json.response.includes('calories')) {
-          const newting = json.calorieLimit;
-          setCalorieLimit(newting);
-        }
-      });
   }
 
 
