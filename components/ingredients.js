@@ -11,18 +11,18 @@ export default function Ingredients({data, function_on_click}) {
     //We pass in all the data
     const [selectedMeal, setSelectedMeal] = useState(null);
 
-    const handleCardClick = (meal) => {
-        if (meal.id === selectedMeal) {
-            setSelectedMeal(null); //If the meal is already selected, unselect it
-        } else {
-            setSelectedMeal(meal.id); //If the meal is not selected, select it
-        }
+    const enter = (meal) => {
+        setSelectedMeal(meal.id); //If the meal is not selected, select it
     }
+    const leave = (meal) => {
+        setSelectedMeal(null);
+    }
+
 
     return (
         <div className={styles.list}>
             {data.map((value) => (
-                <div key={value.id} id={value.id} className={styles.listCard} onClick={()=>handleCardClick(value)}>
+                <div key={value.id} id={value.id} className={styles.listCard} onMouseEnter={()=>enter(value)} onMouseLeave={()=>leave(value)}>
                     <div>
                     <h2 className={inter.className}>
                         {value.name}
