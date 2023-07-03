@@ -6,7 +6,6 @@ export default function handler(req, res) {
       const {user_id} = req.body;
       const date = new Date().toISOString();
       const start_of_day = (date.substring(0, 11) + '00:00:00.000Z');
-      console.log(start_of_day)
 
       //Getting today's meals
       db.all('SELECT meal_id FROM user_meals WHERE salt = ? AND datetime(time_of_meal) >= datetime(?) AND datetime(time_of_meal) <= datetime(?)',
@@ -36,17 +35,34 @@ export default function handler(req, res) {
                 }
                 else {
                 //Now we have all the meals of this user in the last 24 hours
-                let counter_calories = 0;
-                for (let i = 0; i < meal_data.rows.length; i++) {
-                  counter_calories += rows[i].calories;
-                }
-                let counter_protein = 0;
-                for (let i = 0; i < meal_data.rows.length; i++) {
-                  counter_protein += rows[i].protein;
-                }
-                
 
-                  res.status(200).json({ rows });
+                //Setting up counters for each macro
+                let counter_calories = 0
+                let counter_protein = 0
+                let counter_fat = 0
+                let counter_sugar = 0
+                
+                console.log(counter_fat)
+                
+                //Add up all the macros of the meals 
+                for (let i = 0; i < rows.length; i++) {
+                  counter_calories += rows[i].calories;
+                  counter_protein += rows[i].protein;
+                  counter_fat += rows[i].total_fat;
+                  counter_sugar += rows[i].sugars;
+                  console.log(rows[i].calories)
+                }
+
+                //Arrange the data in a JSON object
+                const data = {
+                  'calories': counter_calories,
+                  'protein': counter_protein,
+                  'fats': counter_fat,
+                  'sugars': counter_sugar
+                }
+
+                  //Send the data to the frontend
+                  res.status(200).json({ data });
                 }
               });
             }

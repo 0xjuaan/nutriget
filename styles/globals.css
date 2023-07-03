@@ -100,15 +100,4 @@ a {
   }
 }
 
-@font-face {
-  font-family: 'Mona Sans';
-  src:
-    url('/node_modules/mona-sans') format('woff2 supports variations'),
-    url('/node_modules/mona-sans') format('woff2-variations');
-  font-weight: 200 900;
-  font-stretch: 75% 125%;
-}
 
-html {
-  font-family: 'Mona Sans';
-}

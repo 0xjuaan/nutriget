@@ -20,6 +20,7 @@ export default function Today( { user } ) {
   
     //Setting the state of calories, so now setCalories updates the calories variable
     const [calories, setCalories] = useState(0);
+    const [protein, setProtein] = useState(0);
     const [calorieLimit, setCalorieLimit] = useState(1);
 
     //Function to convert calories to percentage of max
@@ -50,27 +51,19 @@ export default function Today( { user } ) {
         body: JSON.stringify({user_id: user.id})
     })
     .then(response => response.json())
-    .then(meal_data => {
-        if (meal_data.response == 'No meals') {
+    .then(meals => {
+        if (meals.response == 'No meals') {
         }
         else {
             //TODO: Move this crap to the backend, along with summing the other nutrients (do all in backend)
             //Calculating the total calories, updating state
-            let counter_calories = 0;
-            for (let i = 0; i < meal_data.rows.length; i++) {
-              counter_calories += meal_data.rows[i].calories;
+              console.log(meals.data)
+              const counter_calories = meals.data.calories;
               setCalories(counter_calories); 
-            }
+              //Calculating the total protein, updating state
+              const counter_protein = meals.data.protein;
+              setProtein(counter_protein);
 
-            //Updating the angle of the progress circle, using updated calorie values
-            console.log(limit)
-            const angle = toPercent(counter_calories, limit)*3.6;
-        
-            //Updating the progress circle
-            let new_background = `conic-gradient(#44ff44 ${angle}deg, #888888 0deg)`;
-
-            const element = document.getElementById("circle");
-            element.style.background = new_background;
                 
             } 
     });
@@ -110,14 +103,15 @@ export default function Today( { user } ) {
       </Head>
         <div className={styles.center}>
           <h1 className={inter.className}>
-            Today&apos;s Calories
+            Today&apos;s Data
           </h1>
         </div>
          
         <div className={styles.center}>
 
-          <CircularProgress percentage={toPercent(calories, calorieLimit)} />
-          <Fatty></Fatty>
+          <CircularProgress value={calories} limit={calorieLimit} type="Calories" />
+
+          <CircularProgress value={protein} limit={150} type="Protein" />
         </div>
          <button></button>
       

@@ -22,7 +22,7 @@ export default function Ingredients({data, function_on_click}) {
     return (
         <div className={styles.list}>
             {data.map((value) => (
-                <div key={value.id} id={value.id} className={styles.listCard} onMouseEnter={()=>enter(value)} onMouseLeave={()=>leave(value)}>
+                <div key={value.id} id={value.id} className={`${styles.listCard} ${selectedMeal === value.id ? styles.selected : ''}}`} onMouseEnter={()=>enter(value)} onMouseLeave={()=>leave(value)}>
                     <div>
                     <h2 className={inter.className}>
                         {value.name}
@@ -31,11 +31,11 @@ export default function Ingredients({data, function_on_click}) {
                         {Math.round(value.nutrition.nf_calories)} Calories
                         {/*Extra Data*/}
                         {selectedMeal === value.id && (
-                            <>
+                            <div>
                             <p>{Math.round(value.nutrition.nf_protein)}g Protein</p>
                             <p>{Math.round(value.nutrition.nf_total_fat)}g Fat</p>
                             <p>{Math.round(value.nutrition.nf_sugars)}g Sugar</p>
-                            </>
+                            </div>
                         )}
                     </p>
                     </div>

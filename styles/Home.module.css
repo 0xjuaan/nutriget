@@ -26,6 +26,15 @@
   border: 1px solid rgba(var(--card-border-rgb), 0);
   transition: background 200ms, border 200ms;
 }
+.selected {
+  background-color: #e6e6e6;
+}
+.showExtraData {
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  transition-delay: 0.3s; /* Adjust the delay as needed */
+  opacity: 1;
+  transform: translateY(0);
+}
 
 .listCardRight {
   width: 40%;
