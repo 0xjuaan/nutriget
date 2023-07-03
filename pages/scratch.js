@@ -144,7 +144,13 @@ export default function New({ session }) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <form>
+        <h1 className={styles.title}>
+            Add a new meal
+        </h1>
+        <h4 className={styles.natural}>
+            In Natural Language
+        </h4>
+        <form className={styles.scratcher}>
           <input type="text" placeholder="Enter Food" onChange={(e) => setFood(e.target.value)}></input>
           <button id='og' type ='submit' onClick={handleSubmit}>Submit Food</button>
         </form>
