@@ -21,7 +21,9 @@ export default function Today( { user } ) {
     //Setting the state of calories, so now setCalories updates the calories variable
     const [calories, setCalories] = useState(0);
     const [protein, setProtein] = useState(0);
+
     const [calorieLimit, setCalorieLimit] = useState(1);
+    const [proteinGoal, setProteinGoal] = useState(1);
 
     //Function to convert calories to percentage of max
     const toPercent = (value, limit) => Math.round(value*100/limit);
@@ -39,7 +41,7 @@ export default function Today( { user } ) {
       return <Link href='/'>go to settings and set ur calorie limit</Link>
     }
     else {
-        return calorie_data.calorieLimit;
+        return {'calorieLimit': calorie_data.calorieLimit, 'proteinGoal': calorie_data.proteinGoal};
     }
   }
 
@@ -55,25 +57,23 @@ export default function Today( { user } ) {
         if (meals.response == 'No meals') {
         }
         else {
-            //TODO: Move this crap to the backend, along with summing the other nutrients (do all in backend)
             //Calculating the total calories, updating state
-              console.log(meals.data)
               const counter_calories = meals.data.calories;
               setCalories(counter_calories); 
+
               //Calculating the total protein, updating state
               const counter_protein = meals.data.protein;
               setProtein(counter_protein);
-
-                
             } 
     });
   }
     useEffect(() => {
       const fetchCalories = async () => {
         getCalorieLimit().then(
-          limit => {
-            setCalorieLimit(limit);
-            getTodayMeals(limit);
+          data => {
+            setCalorieLimit(data.calorieLimit);
+            setProteinGoal(data.proteinGoal);
+            getTodayMeals(data.calorieLimit);
           });
       }
       fetchCalories();
@@ -111,7 +111,7 @@ export default function Today( { user } ) {
 
           <CircularProgress value={calories} limit={calorieLimit} type="Calories" />
 
-          <CircularProgress value={protein} limit={150} type="Protein" />
+          <CircularProgress value={protein} limit={proteinGoal} type="Protein" />
         </div>
          <button></button>
       

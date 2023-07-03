@@ -18,7 +18,7 @@ export default function handler(req, res) {
                     res.status(500).json({ error: 'Internal server error' });
                 }
                 else {
-                    if (rows.length == 0) {
+                    if (rows.length == 0) {'calories set'
                         res.status(500).json({ 'response': 'No calorie limit set' }); 
                     }
                     else {
