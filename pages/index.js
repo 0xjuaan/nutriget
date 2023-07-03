@@ -30,7 +30,6 @@ export default function Home({ user }) {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [calorieLimit, setCalorieLimit] = useState();
   const [proteinGoal, setProteinGoal] = useState();
-
   //Getting the user's calorie limit
   useEffect(() => {
     fetch('/api/getCalories', {
@@ -131,7 +130,7 @@ export default function Home({ user }) {
       <main className={styles.main}>
         
         <div className={styles.center}>
-          <h1>Hi {user.id[0]}</h1>
+          <h1>Hi {user.username}</h1>
           <h1>
             Nutriget
           </h1>

@@ -8,6 +8,18 @@
   background: red;
   border-radius: 10%;
 }
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: relative;
+  padding: 4rem;
+}
+
+.center h5 {
+  text-align: center;
+}
 .list {
   display: flex;
   flex-direction: column;
@@ -185,10 +197,9 @@
 
 .center {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: relative;
-  padding: 4rem 0;
+  padding: 4rem;
 }
 .center h1 {
   font-size: 64px;
@@ -229,6 +240,9 @@
     padding: 4rem;
   }
 
+  .container {
+    margin: 8rem;
+  }
   .grid {
     grid-template-columns: 1fr;
     margin-bottom: 120px;

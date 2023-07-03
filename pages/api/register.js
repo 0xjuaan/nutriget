@@ -44,7 +44,7 @@ export default function handler(req, res) {
               res.status(500).json({ error: 'Internal server error' });
             } 
             else {
-                const user = { email: email, id: salt, onboardNeeded: true }; //The user id is their salt (since it's unique and not sensitive)
+                const user = { email: email, id: salt, onboardNeeded: true, username: username }; //The user id is their salt (since it's unique and not sensitive)
                 const session = { user }; //Setting the session as the user object
 
                 setSession(res, session);

@@ -6,7 +6,6 @@
     border-radius: 50%;
     position: relative;
     margin-left: 10px;
-    margin-right: 10px;
   }
   
   .innerCircle {
@@ -23,5 +22,14 @@
     left: 50%;
     transform: translate(-50%, -50%);
     
+  }
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 10px;
+    margin-right: 90px;
   }
     

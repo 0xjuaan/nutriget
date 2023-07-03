@@ -108,13 +108,9 @@ export default function Today( { user } ) {
         </div>
          
         <div className={styles.center}>
-
           <CircularProgress value={calories} limit={calorieLimit} type="Calories" />
-
           <CircularProgress value={protein} limit={proteinGoal} type="Protein" />
-        </div>
-         <button></button>
-      
+        </div>      
     </>
   )
 }

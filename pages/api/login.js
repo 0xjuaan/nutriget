@@ -12,7 +12,7 @@ export default function login(req, res) {
       res.status(400).json({ 'response': 'Empty' });
     }
 
-    db.all('SELECT hash,salt FROM users WHERE email = ?', [email], (err, rows) => {
+    db.all('SELECT hash,salt,username FROM users WHERE email = ?', [email], (err, rows) => {
       if (err) {
           console.error(err.message);
           return false;
@@ -25,12 +25,13 @@ export default function login(req, res) {
           else {
             const salt = rows[0].salt;
             const hashed_stuff = rows[0].hash;
+            const username = rows[0].username;
 
             bcrypt.hash(password, salt)
             .then((test_hash) => {
 
               if (test_hash == hashed_stuff){
-                const user = { email: email, id: salt }; //The user id is their salt (since it's unique and not sensitive)
+                const user = { email: email, id: salt, username: username}; //The user id is their salt (since it's unique and not sensitive)
                 const session = { user }; //Setting the session as the user
 
                 setSession(res, session);
