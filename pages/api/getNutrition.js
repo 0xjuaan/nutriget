@@ -1,4 +1,5 @@
 import db from 'next/database'
+require('dotenv').config(); // Load environment variables
 
 export default function handler(req, res) {
     if (req.method == 'POST') {
@@ -14,7 +15,7 @@ export default function handler(req, res) {
         headers: { 
           'Content-Type': 'application/json',
           'x-app-id' : '4def7606',
-          'x-app-key' : '36c464d782a41bc80e51f3fbfd32b9b3',
+          'x-app-key' : process.env.API_KEY,
           'x-remote-user-id' : 0 
         }
       })

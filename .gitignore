@@ -11,6 +11,7 @@
 # testing
 /coverage
 session.js
+.env
 
 # next.js
 /.next/
