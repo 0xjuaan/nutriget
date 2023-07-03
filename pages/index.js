@@ -29,6 +29,7 @@ export default function Home({ user }) {
   const [modalOpen, setModalOpen] = useState(false);
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [calorieLimit, setCalorieLimit] = useState();
+  const [proteinGoal, setProteinGoal] = useState();
 
   //Getting the user's calorie limit
   useEffect(() => {
@@ -39,15 +40,14 @@ export default function Home({ user }) {
       },
     })
     .then(response => response.json())
-    .then(calorie_data => {
-        if (calorie_data.response == 'No calorie limit set') {
-          //TODO: make this more streamlined for the user (like bringing the settings modal from index.js to here)
+    .then(data => {
+        if (data.response == 'No calorie limit set') {
           return <Link href='/'>go to settings and set ur calorie limit</Link>
         }
         else {
           //Setting the state of calories, so now setCalories updates the calories variable
-          setCalorieLimit(calorie_data.calorieLimit);
-          return calorie_data.calorieLimit;
+          setCalorieLimit(data.calorieLimit);
+          setProteinGoal(data.proteinGoal);
         }
     });
   }, []);
@@ -224,7 +224,14 @@ export default function Home({ user }) {
               <h5>Update your daily calorie limit:</h5>
               <input type="number" id="calorieLimit" name="calorieLimit" min="0" max="5000"></input>
               <button onClick={setCalories}>Set</button>
-              <h6>Current calorieLimit: {calorieLimit}</h6>
+              <h6>Current calorie limit: {calorieLimit}</h6>
+            </div>
+
+            <div>
+              <h5>Update your daily protein goal:</h5>
+              <input type="number" id="proteinGoal" name="proteinGoal" min="0" max="400"></input>
+              <button onClick={setCalories}>Set</button>
+              <h6>Current protein goal: {proteinGoal}</h6>
             </div>
             
           </ReactModal>

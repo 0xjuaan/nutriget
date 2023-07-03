@@ -19,12 +19,10 @@ export default function handler(req, res) {
                 }
                 else {
                     if (rows.length == 0) {
-                        //If the user doesn't have a calorie limit set, insert one
                         res.status(500).json({ 'response': 'No calorie limit set' }); 
                     }
                     else {
-                        //If the user already has a calorie limit set, update it
-                        res.status(200).json({'calorieLimit': rows[0].calorieLimit });
+                        res.status(200).json({'calorieLimit': rows[0].calorieLimit, 'proteinGoal': rows[0].proteinGoal });
                     }
                 }
             }
