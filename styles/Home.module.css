@@ -116,8 +116,7 @@
   transition: background 200ms, border 200ms;
 }
 .smallButton {
-  justify-content: space-between;
-  text-align: center;
+  justify-content: center;
   width: 250px;
   display: flex;
   padding: 1rem 0rem;

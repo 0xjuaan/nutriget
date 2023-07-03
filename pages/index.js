@@ -147,7 +147,7 @@ export default function Home({ user }) {
         </button>
 
         </div>
-        <button onClick={logout} className={styles.smallButton}><p>Log Out <br></br>(for testing user auth)</p></button>
+        
 
         {query.login ? (<p>Welcome back, user!</p>) : (<h1></h1>)}
 
@@ -171,8 +171,8 @@ export default function Home({ user }) {
             
           <MainButton 
             page="today" 
-            title="Today's Calories" 
-            description="Check if you're a fatty. 🍔🍟🥞"/>
+            title="Today's Data" 
+            description="See your nutrition data for today"/>
           
           <MainButton
             page="history"
@@ -214,7 +214,7 @@ export default function Home({ user }) {
             isOpen={settingsOpen} 
             onRequestClose={closeSettings}
             style={modalStyles}>
-            <h1>Settings Modal!!!</h1>
+            <h1>Settings</h1>
 
             <div>
               <h5>Update your daily calorie limit:</h5>
@@ -229,6 +229,8 @@ export default function Home({ user }) {
               <button onClick={setCalories}>Set</button>
               <h6>Current protein goal: {proteinGoal}</h6>
             </div>
+
+            <button onClick={logout} className={styles.smallButton}>Log Out</button>
             
           </ReactModal>
       </main>
