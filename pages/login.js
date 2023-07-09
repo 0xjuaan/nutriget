@@ -36,6 +36,7 @@ export default function Login() {
     });
     const data = await result.json();
     if (data.user) {
+      console.log(data)
       router.push('/')
     }
     else {

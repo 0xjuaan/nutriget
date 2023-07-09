@@ -1,32 +1,33 @@
 import db from 'next/database'
+import supabase from '/lib/supabaseClient.js';
 
 import { getSession } from "/session";
 import { setSession } from "/session";
-export default function handler(req, res) {
+
+
+export default async function handler(req, res) {
     if (req.method == 'POST') {
 
         const {calories} = req.body;
         const {protein} = req.body;
-        console.log(calories);
 
         const {user} = getSession(req);
+        
+        const { data, error } = await supabase
+            .from('calorie_limits')
+            .insert([
+                { salt: user.id, calorie_limit: calories, protein_goal: protein },
+            ]);
 
-        db.run( 
-            'INSERT INTO calorieLimits (salt, calorieLimit, proteinGoal) VALUES (?, ?, ?)',
-            [user.id, calories, protein],
-            function(err) {
-            if (err) {
-                console.error(err.message);
+            if (error) {
                 res.status(500).json({ error: 'Internal server error' });
             } 
             else {
                 user.onboardNeeded = false;
-                const session = { user }; //Setting the session as the user
-
+                const session = { user: user }; //Setting the session as the user
                 setSession(res, session);
                 res.status(200).json({ user });
             }
-        });      
     }
 }
 

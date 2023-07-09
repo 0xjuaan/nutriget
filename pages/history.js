@@ -9,7 +9,7 @@ import { useRouter } from 'next/router'
 import ReactModal from 'react-modal';
 
 import { getSession } from "/session";
-
+import styles from 'next/styles/Home.module.css'
 const inter = Inter({ subsets: ['latin'] })
 
 //This is the homepage for users once they log in to Nutriget
@@ -63,7 +63,10 @@ const deleteMeal = (event) => {
   //First prop: data.rows, which is an array of objects
   //Also pass a function that deletes the meal from the database (based on meal_id)
   return (
-  <MealList data={mealData} function_on_click={deleteMeal}/>
+    <>
+    <h1 className={styles.title}>History</h1>
+    <MealList data={mealData} function_on_click={deleteMeal}/>
+  </>
   )
 }
 

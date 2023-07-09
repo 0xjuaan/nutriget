@@ -68,9 +68,13 @@ export default function Home({ user }) {
   const setCalories = (e) => {
     e.preventDefault();
     const newCalories = document.getElementById('calorieLimit').value;
+    if (newCalories != "") {
     setCalorieLimit(newCalories);
+  }
     const newProtein = document.getElementById('proteinGoal').value;
-    setProteinGoal(newProtein);
+    if (newProtein != "") {
+      setProteinGoal(newProtein);
+    }
 
     fetch('/api/setCalories', {
       method: 'POST',
@@ -111,7 +115,7 @@ export default function Home({ user }) {
           background: 'rgba(0,0,0, 0.1)', // Glassmorphism background color
           backdropFilter: 'blur(24px)', // Blur effect
           WebkitBackdropFilter: 'blur(24px)', // Blur effect for Safari
-          border: '1px solid rgba(0, 0, 0, 0.6)', // Glassmorphism border
+          border: '1px solid rgba(2, 200, 55, 1)', // Glassmorphism border
         },
         overlay: {
           background: 'rgba(0,0,0, 0.7)', // Dark background color

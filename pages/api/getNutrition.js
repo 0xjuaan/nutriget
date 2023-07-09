@@ -3,7 +3,6 @@ require('dotenv').config(); // Load environment variables
 
 export default function handler(req, res) {
     if (req.method == 'POST') {
-      const bcrypt = require('bcrypt');
 
       //Getting the user input from the form
       const text = req.body;
@@ -14,7 +13,7 @@ export default function handler(req, res) {
         body: JSON.stringify({'query': text}), 
         headers: { 
           'Content-Type': 'application/json',
-          'x-app-id' : '4def7606',
+          'x-app-id' : process.env.APP_ID,
           'x-app-key' : process.env.API_KEY,
           'x-remote-user-id' : 0 
         }
@@ -27,9 +26,7 @@ export default function handler(req, res) {
           usefulData.push({"name": data.foods[i].food_name, "nutrition": data.foods[i], "id": Math.random()});
         }
 
-        //console.log(JSON.stringify(usefulData));
-
         res.status(200).json({"data": usefulData})})
       .catch(err => console.log(err));
       }
-      }
+}

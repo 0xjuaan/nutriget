@@ -1,13 +1,11 @@
-import db from 'next/database'
+import supabase from '../lib/supabaseClient';
 
-
-export default function handler(req, res) {
+export default async function handler(req, res) {
     if (req.method == 'POST') {
 
       //Getting the user input from the form
       const {user_id, meal_name, date, data} = req.body;
       
-        
       //Process the meal data (sum nutrients across all foods)
         var meal_nutrition = {
             "calories": 0,
@@ -18,7 +16,6 @@ export default function handler(req, res) {
         };
 
         //Sum the nutrients across all foods in the meal
-        //TODO: Find a simpler way to do this using JS funcs
         for (let i = 0; i < data.length; i++) {
             meal_nutrition.calories += data[i].nutrition.nf_calories;
             meal_nutrition.total_fat += data[i].nutrition.nf_total_fat;
@@ -28,33 +25,32 @@ export default function handler(req, res) {
         }
 
       //Send the meal_nutrition_data to the meal table
-        db.run( 
-        'INSERT INTO meals (name, calories, total_fat, total_carbs, sugars, protein) VALUES (?, ?, ?, ?, ?, ?)',
-        [meal_name, meal_nutrition.calories, meal_nutrition.total_fat, meal_nutrition.total_carbohydrate, meal_nutrition.sugars, meal_nutrition.protein],
-        function(err) {
-        if (err) {
-            console.error(err.message);
-            res.status(500).json({ error: 'Internal server error' });
-        } 
-        else {
-            //Get the meal_id from the meal table
-            const meal_id = this.lastID;
+        const {mealData, error} = await supabase
+            .from('meals')
+            .insert([
+                { name: meal_name, calories: meal_nutrition.calories, total_fat: meal_nutrition.total_fat, total_carbs: meal_nutrition.total_carbohydrate, sugars: meal_nutrition.sugars, protein: meal_nutrition.protein },
+            ]);
 
-            //Send the meal id and time to the user_meals table (with the user_id too)
-            db.run(
-                'INSERT INTO user_meals (salt, meal_id, time_of_meal) VALUES (?, ?, ?)',
-                [user_id, meal_id, date],
-                (err) => {
-                    if (err) {
-                        console.error(err.message);
-                        res.status(500).json({ error: 'Internal server error' });
-                    }
-                    else {
-                        res.status(200).json({ 'response': `meal "${meal_name}" added` });
-                    }
-                });
+        if (error) {
+            console.error(error.message);
+            res.status(500).json({ error: 'Internal server error' });
+        }
+        else {
+            const meal_id = mealData[0].id;
+
+            const {error2} = await supabase
+                .from('user_meals')
+                .insert([
+                    { salt: user_id, meal_id: meal_id, time_of_meal: date },
+                ]);
+            if (error2) {
+                console.error(error2.message);
+                res.status(500).json({ error: 'Internal server error' });
             }
-        });      
+            else {
+                res.status(200).json({ 'response': `meal "${meal_name}" added` });
+            }
+            
+        }
     }
 }
-

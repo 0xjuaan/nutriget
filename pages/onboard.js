@@ -17,6 +17,7 @@ const inter = Inter({ subsets: ['latin'] })
 
 export async function getServerSideProps({ req, res }) {
     const { user } = getSession(req) ?? { user: null};
+    console.log(JSON.stringify(user))
     if (!user) return { redirect: { permanent: false, destination: "/login" } };
     else return { props: { user } };
   }
