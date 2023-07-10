@@ -1,4 +1,4 @@
-import supabase from '../lib/supabaseClient';
+import supabase from '/lib/supabaseClient';
 
 export default async function handler(req, res) {
     if (req.method == 'POST') {
@@ -25,24 +25,27 @@ export default async function handler(req, res) {
         }
 
       //Send the meal_nutrition_data to the meal table
-        const {mealData, error} = await supabase
+        const {data : mealData, error} = await supabase
             .from('meals')
             .insert([
-                { name: meal_name, calories: meal_nutrition.calories, total_fat: meal_nutrition.total_fat, total_carbs: meal_nutrition.total_carbohydrate, sugars: meal_nutrition.sugars, protein: meal_nutrition.protein },
-            ]);
+                { name: meal_name, calories: parseInt(meal_nutrition.calories), total_fat: parseInt(meal_nutrition.total_fat), total_carbs: parseInt(meal_nutrition.total_carbohydrate), sugars: parseInt(meal_nutrition.sugars), protein: parseInt(meal_nutrition.protein) },
+            ])
+            .select('meal_id');
 
         if (error) {
             console.error(error.message);
             res.status(500).json({ error: 'Internal server error' });
         }
         else {
-            const meal_id = mealData[0].id;
+            console.log(mealData)
+            const meal_id = mealData[0].meal_id;
 
             const {error2} = await supabase
                 .from('user_meals')
                 .insert([
                     { salt: user_id, meal_id: meal_id, time_of_meal: date },
                 ]);
+                
             if (error2) {
                 console.error(error2.message);
                 res.status(500).json({ error: 'Internal server error' });

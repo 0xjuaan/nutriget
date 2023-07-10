@@ -3,7 +3,6 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Inter } from 'next/font/google'
 import styles from 'next/styles/Home.module.css'
-import login from 'next/styles/Login.module.css'
 
 import {useState, useEffect} from 'react';
 import { useRouter } from 'next/router'
@@ -13,14 +12,9 @@ import Ingredients from '../components/ingredients'
 
 import { getSession } from "/session";
 
-
-
 const inter = Inter({ subsets: ['latin'] })
 
-
-
 export default function New({ session }) {
-
   
   const { user } = session;
   const [user_id, setUser_id] = useState(user.id);
@@ -32,7 +26,6 @@ export default function New({ session }) {
   const [additional, setAdditional] = useState(false);
   const [calories, setCalories] = useState(0);
   const [data, setData] = useState([]);
-
 
     //Modal Setup
     const [modalOpen, setModalOpen] = useState(false);
@@ -61,7 +54,6 @@ export default function New({ session }) {
       },
     }
     
-
     //Function to remove stuff from food list
     const handleRemove = (event) => {
       const id = Number(event.target.id);
@@ -94,10 +86,6 @@ export default function New({ session }) {
         setModalOpen(false);
         setEndModal(true);
       }
-
-
-      
-      //Have a new green modal pop up (Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link>)
     }
     //Accessing the edamam API with a POST request
     const handleSubmit = async (event) => {
@@ -110,9 +98,7 @@ export default function New({ session }) {
       }
       else {
         finalInput = additional;
-      }
-      
-      
+      } 
       
       const result = await fetch ('/api/getNutrition  ', {
         method: 'POST',
@@ -189,15 +175,12 @@ export default function New({ session }) {
 
         <ReactModal
           isOpen={endModal} 
-          style={modalStyles}
-          >
+          style={modalStyles}>
             <h1>Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link></h1>
         </ReactModal>
         
       </main>
-
-    </>
-    
+    </>    
   );
 };
 export async function getServerSideProps({ req, res }) {

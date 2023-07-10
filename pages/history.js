@@ -37,8 +37,7 @@ export default function History({ session }) {
       setMealData("None")
     }
     else {
-    setMealData(meal_data.rows)
-    console.log(`DATA RETURNED: ${meal_data.rows}`)
+    setMealData(meal_data)
     }
   });
 }, [change_val]);
@@ -55,7 +54,6 @@ const deleteMeal = (event) => {
   })
   .then(response => response.json())
   .then(data => {
-    console.log("here is the data: " + data.response)
     setChange(change_val + 1)});
 }
 
