@@ -1,4 +1,3 @@
-import db from 'next/database'
 require('dotenv').config(); // Load environment variables
 
 export default function handler(req, res) {

@@ -217,7 +217,16 @@
 }
 
 
-
+.viewHistory {
+  justify-content: center;
+  width: 550px;
+  display: flex;
+  padding: 1rem 0rem;
+  border-radius: var(--border-radius);
+  background: rgba(12, 230, 16, 0.348);
+  border: 1px solid rgba(var(--card-border-rgb), 0);
+  transition: background 200ms, border 200ms;
+}
 .logo {
   position: relative;
 }
@@ -234,6 +243,9 @@
   .smallButton:hover {
     background: rgba(12, 230, 16, 0.5);
     border: 1.2px solid rgba(var(--card-border-rgb), 0.15);
+  }
+  .viewHistory:hover {
+    background: rgba(12, 230, 16, 0.5);
   }
 
  

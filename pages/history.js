@@ -6,7 +6,6 @@ import { Inter } from 'next/font/google'
 import {useState, useEffect} from 'react';
 import MealList from '../components/mealList'
 import { useRouter } from 'next/router'
-import ReactModal from 'react-modal';
 
 import { getSession } from "/session";
 import styles from 'next/styles/Home.module.css'
@@ -57,12 +56,12 @@ const deleteMeal = (event) => {
     setChange(change_val + 1)});
 }
 
-  //Make and import a component that displays the meals in a list
-  //First prop: data.rows, which is an array of objects
-  //Also pass a function that deletes the meal from the database (based on meal_id)
   return (
     <>
+    <div className={styles.center}>
     <h1 className={styles.title}>History</h1>
+    <Link className={styles.smallButton}href='/'>Back to home</Link> 
+    </div>
     <MealList data={mealData} function_on_click={deleteMeal}/>
   </>
   )

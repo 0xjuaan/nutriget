@@ -1,4 +1,3 @@
-import db from 'next/database'
 import supabase from '/lib/supabaseClient.js';
 import { getSession } from "/session";
 

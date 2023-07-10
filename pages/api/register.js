@@ -1,6 +1,5 @@
 import { setSession } from "/session";
 import supabase from '/lib/supabaseClient.js';
-import { v4 as uuid } from 'uuid';
 
 export default async function handler(req, res) {
     if (req.method == 'POST') {

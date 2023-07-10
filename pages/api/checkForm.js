@@ -1,5 +1,3 @@
-
-import db from 'next/database'
 import supabase from '/lib/supabaseClient.js';
 
 //Checking if something has the pattern of an email or not

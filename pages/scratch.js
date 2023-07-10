@@ -48,6 +48,8 @@ export default function New({ session }) {
         maxHeight: '80vh', // Take up less space, adjust the height as needed
         margin: 'auto',
         background: 'rgba(0,0,0)', // Dark background color
+        border: '1px solid rgba(2, 200, 55, 1)', // Glassmorphism border
+
       },
       overlay: {
         background: 'rgba(0,0,0, 0.7)', // Dark background color
@@ -98,7 +100,8 @@ export default function New({ session }) {
       }
       else {
         finalInput = additional;
-      } 
+      }
+ 
       
       const result = await fetch ('/api/getNutrition  ', {
         method: 'POST',
@@ -176,7 +179,7 @@ export default function New({ session }) {
         <ReactModal
           isOpen={endModal} 
           style={modalStyles}>
-            <h1>Success! You have added the meal. <Link href="/history">Click here to view your meal history</Link></h1>
+            <h1>Success! You have added the meal. <br/><br/> <Link className={styles.viewHistory} href="/history">Click here to view your meal history</Link></h1>
         </ReactModal>
         
       </main>

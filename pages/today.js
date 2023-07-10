@@ -105,11 +105,14 @@ export default function Today( { user } ) {
           <h1 className={inter.className}>
             Today&apos;s Data
           </h1>
+          <Link className={styles.smallButton}href='/'>Back to home</Link> 
         </div>
+        <Fatty/>
         <div className={styles.center}>
           <CircularProgress value={calories} limit={calorieLimit} type="Calories" />
           <CircularProgress value={protein} limit={proteinGoal} type="Protein" />
-        </div>      
+        </div>    
+         
     </>
   )
 }
