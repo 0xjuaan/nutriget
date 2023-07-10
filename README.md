@@ -12,7 +12,7 @@ Here is a link to the [ultimate resource](https://www.youtube.com/watch?v=dQw4w9
 - [ ] Make app look nice with better css
 - [ ] Implement all futures features
 
-#Future features
+# Future features
 - [ ] User chooses what macros they want to hide
 - [ ] User can re-add meals straight from /history page
 - [ ] Forgot your password + Verify Email
