@@ -1,5 +1,7 @@
 # Nutriget- All your nutritional data, meaningfully displayed in one place.
 
+I made this to learn the basics of NextJS
+
 This is a work in progress. 
 
 Used API from [Nutritionix](https://www.nutritionix.com/business/api). 
